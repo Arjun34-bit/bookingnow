@@ -19,7 +19,6 @@ connectDB();
 
 // Routes
 
-app.use("/api/", console.log("API Running Successfully"));
 app.use("/api/auth", authRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/bookings", bookingRoutes);
