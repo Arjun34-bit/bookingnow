@@ -9,10 +9,9 @@ export const loginUser = (userData) => async (dispatch) => {
     dispatch(setLoading(true));
     const { data } = await axios.post(`${URL}/auth/login`, userData);
     dispatch(setUser(data));
-    // localStorage.setItem("userDetails", JSON.stringify(data?.user?.user));
     dispatch(setLoading(false));
   } catch (error) {
-    dispatch(setError(error.response?.data?.message || "Login failed"));
+    dispatch(setError(error?.response?.data?.message || "Login failed"));
     dispatch(setLoading(false));
   }
 };
@@ -21,7 +20,6 @@ export const loginUser = (userData) => async (dispatch) => {
 export const registerUser = (userData) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
-    console.log(userData);
     const { data } = await axios.post(`${URL}/auth/register`, userData);
     dispatch(setUser(data));
     dispatch(setLoading(false));
@@ -42,9 +40,11 @@ export const openModal = () => (dispatch) => {
   dispatch(showModal());
 };
 
+export const getUser = () => {};
+
 const storedUser = localStorage.getItem("userDetails")
   ? JSON.parse(localStorage.getItem("userDetails"))
-  : null;
+  : [];
 
 const userSlice = createSlice({
   name: "user",

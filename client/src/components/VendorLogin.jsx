@@ -10,14 +10,18 @@ const VendorLogin = () => {
 
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state?.user?.user);
+  const user = useSelector((state) => state?.user);
 
   console.log(user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser({ email, password }));
-    navigate("/vendor/home");
+    if (!user?.user || !user?.error) {
+      alert(user?.error || "Something Went Wrong");
+    } else {
+      navigate("/vendor/home");
+    }
   };
   return (
     <form className="space-y-4">

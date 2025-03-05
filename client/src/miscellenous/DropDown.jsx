@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/authReducer";
 import { useNavigate } from "react-router-dom";
 
-const DropDown = () => {
+const DropDown = ({ role }) => {
   const user = useSelector((state) => state?.user);
+
+  console.log(user);
 
   const navigate = useNavigate();
 
@@ -14,7 +16,11 @@ const DropDown = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logoutUser());
-    navigate("/vendor");
+    if (role === "vendor") {
+      navigate("/vendor");
+    } else {
+      navigate("/");
+    }
   };
 
   return (

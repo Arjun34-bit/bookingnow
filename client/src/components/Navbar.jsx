@@ -2,26 +2,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import DropDown from "../miscellenous/DropDown";
 import { openModal } from "../redux/authReducer";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 const Navbar = () => {
   const user = useSelector((state) => state?.user);
-
   const dispatch = useDispatch();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleModal = (e) => {
     e.preventDefault();
     dispatch(openModal(!user?.loading));
   };
 
-  useEffect(() => {
-    // const userInfo = JSON.parse(localStorage.getItem("userDetails"));
-    // if (userInfo) {
-    //   console.log(userInfo);
-    // }
-  }, []);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
     <nav className="bg-blue-600 text-white p-4 shadow-md">
@@ -29,12 +25,12 @@ const Navbar = () => {
         <Link to="/" className="text-2xl font-bold">
           BookingNow.com
         </Link>
+
+        {/* Desktop Menu */}
         <ul className="p-1 hidden md:flex space-x-6">
           <li>INR</li>
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmHqUFx4yBWukSFU98PfOvQaSbIoVjgSz6tA&s"
-            // height={1}
-            // width={25}
             className="rounded-full w-6 h-6 object-cover"
           />
           <li>
@@ -47,7 +43,7 @@ const Navbar = () => {
           ) : (
             <>
               <li
-                className="p-1 bg-white text-black border rounded hover:text-gray-300 cursor"
+                className="p-1 bg-white text-black border rounded hover:text-gray-300 cursor-pointer"
                 onClick={handleModal}
               >
                 <Link to="/" className="hover:text-gray-300">
@@ -63,9 +59,48 @@ const Navbar = () => {
             </>
           )}
         </ul>
+
         {/* Mobile Menu Button */}
-        <button className="md:hidden">☰</button>
+        <button className="md:hidden text-2xl" onClick={toggleMenu}>
+          ☰
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <ul className="md:hidden flex flex-col items-center space-y-4 p-4 bg-blue-700 text-white">
+          <li>INR</li>
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmHqUFx4yBWukSFU98PfOvQaSbIoVjgSz6tA&s"
+            className="rounded-full w-6 h-6 object-cover"
+          />
+          <li>
+            <Link to="/vendor" className="p-1 hover:text-gray-300">
+              List Your Property
+            </Link>
+          </li>
+          {user?.user?.role ? (
+            <DropDown />
+          ) : (
+            <>
+              <li
+                className="p-1 bg-white text-black border rounded hover:text-gray-300 cursor-pointer"
+                onClick={handleModal}
+              >
+                <Link to="/" className="hover:text-gray-300">
+                  Login
+                </Link>
+              </li>
+
+              <li className="p-1 bg-white text-black border rounded">
+                <Link to="/register" className="hover:text-gray-300">
+                  Register
+                </Link>
+              </li>
+            </>
+          )}
+        </ul>
+      )}
     </nav>
   );
 };

@@ -15,6 +15,9 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser({ email, password }));
+    if (user?.error) {
+      alert(user?.error);
+    }
   };
 
   return (

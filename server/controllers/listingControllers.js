@@ -1,5 +1,5 @@
 const Listing = require("../models/Listing");
-const User = require("../models/Users");
+const Vendor = require("../models/Vendor");
 
 //Vendor Access
 const createListing = async (req, res) => {
@@ -14,7 +14,7 @@ const createListing = async (req, res) => {
       startingPrice,
     } = req.body;
 
-    const userRole = await User.findById(req.user.userId);
+    const userRole = await Vendor.findById(req.user.userId);
 
     if (userRole.role === "customer") {
       return res

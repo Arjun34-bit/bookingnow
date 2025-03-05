@@ -80,7 +80,7 @@ const VendorHome = () => {
             {isOpen ? <FiX /> : <FiMenu />}
           </button>
           <h2 className="text-xl font-semibold">Vendor's Panel</h2>
-          <DropDown />
+          <DropDown role={"vendor"} />
         </nav>
         {/* {listings ? <LoadingBar /> : ""} */}
 

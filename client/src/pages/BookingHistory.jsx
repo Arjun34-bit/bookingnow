@@ -13,8 +13,6 @@ const BookingHistory = ({ role }) => {
   const dispatch = useDispatch();
   const bookings = useSelector((state) => state?.booking?.bookings);
 
-  console.log(bookings);
-
   const loading = useSelector((state) => state?.booking?.loading);
 
   const cancelBookings = (bookingId) => {
@@ -98,28 +96,42 @@ const BookingHistory = ({ role }) => {
                         booking.status.slice(1)}
                     </td>
                     <td className="py-3 px-4">{booking?.paymentDetails}</td>
-                    <td className="py-3 px-4 d-flex">
+                    <td className="py-3 px-4 text-center ">
                       {booking.status !== "canceled" ? (
                         <>
                           <button
                             onClick={() => cancelBookings(booking?._id)}
-                            className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600 transition"
+                            className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600 transition w-48 h-8"
                           >
                             Cancel Booking
                           </button>
                           {role === "vendor" ? (
                             <button
                               onClick={() => handleApprove(booking?._id)}
-                              className="mt-1 bg-green-500 text-white px-1 py-1 rounded-md hover:bg-red-600 transition"
+                              disabled={
+                                booking?.status === "confirmed" ? true : false
+                              }
+                              className={
+                                booking?.status === "confirmed"
+                                  ? "mt-1 bg-green-200 text-black px-1 py-1 rounded-md  transition w-48 h-8"
+                                  : "mt-1 bg-green-500 text-white px-1 py-1 rounded-md hover:bg-green-300 transition w-48 h-8"
+                              }
                             >
-                              Approve Booking
+                              {booking?.status === "confirmed"
+                                ? "Approved"
+                                : "Approve Booking"}
                             </button>
                           ) : (
                             ""
                           )}
                         </>
                       ) : (
-                        <span className="text-gray-400">Canceled</span>
+                        <span className="text-gray-400">
+                          {" "}
+                          {booking?.status === "confirmed"
+                            ? "Confirmed"
+                            : "Canceled"}
+                        </span>
                       )}
                     </td>
                   </tr>

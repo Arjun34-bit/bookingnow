@@ -77,7 +77,7 @@ export const changeBookingStatus = (userData) => async (dispatch) => {
         Authorization: `Bearer ${userData.token}`,
       },
     };
-    const { data } = await axios.get(
+    const { data } = await axios.put(
       `${URL}/bookings/change/`,
       userData,
       config

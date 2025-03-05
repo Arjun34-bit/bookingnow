@@ -38,7 +38,7 @@ const ListingTable = ({ onDeleteListing, onAddUnit, fetchListing }) => {
 
   const handleSubmit = (data) => {
     dispatch(createUnit(data));
-    isModalOpen(false);
+    setIsModalOpen(false);
     alert("Unit Created Successfully");
   };
 

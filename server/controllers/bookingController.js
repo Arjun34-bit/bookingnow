@@ -2,6 +2,7 @@ const Booking = require("../models/Booking");
 const Listing = require("../models/Listing");
 const Unit = require("../models/Unit");
 const User = require("../models/Users");
+const Vendor = require("../models/Vendor");
 
 //User
 const createBooking = async (req, res) => {
@@ -78,7 +79,7 @@ const getBookingsByUser = async (req, res) => {
 //Vendor
 const getAllBookings = async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId);
+    const user = await Vendor.findById(req.user.userId);
 
     if (user.role === "customer") {
       return res
@@ -149,7 +150,12 @@ const cancelBooking = async (req, res) => {
 //Vendor
 const changeBookingStatus = async (req, res) => {
   try {
-    const userRole = await User.findById(req.user.userId);
+    let userRole;
+    userRole = await User.findById(req.user.userId);
+
+    if (!userRole) {
+      userRole = await Vendor.findById(req.user.userId);
+    }
 
     if (userRole.role === "customer") {
       return res

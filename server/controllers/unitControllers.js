@@ -1,10 +1,10 @@
 const Unit = require("../models/Unit");
-const User = require("../models/Users");
+const Vendor = require("../models/Vendor");
 
 //Vendor
 const createUnit = async (req, res) => {
   try {
-    const userRole = await User.findById(req.user.userId);
+    const userRole = await Vendor.findById(req.user.userId);
 
     if (userRole.role === "customer") {
       return res.status(401).json({ message: "Access Denied" });

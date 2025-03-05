@@ -56,7 +56,7 @@ const ListingFormModal = ({ isOpen, onClose, onSubmit }) => {
               >
                 <option value="">Select Type</option>
                 <option value="hotel">Hotel</option>
-                <option value="restaurant">Restaurant</option>
+                <option value="restaurants">Restaurant</option>
               </select>
               {errors.type && (
                 <p className="text-red-500">{errors.type.message}</p>
