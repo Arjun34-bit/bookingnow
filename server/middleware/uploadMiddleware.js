@@ -9,12 +9,11 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Set up Multer Storage for Cloudinary
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "listings", // Cloudinary folder name
-    allowed_formats: ["jpg", "png", "jpeg"], // Allowed file types
+    folder: "listings",
+    allowed_formats: ["jpg", "png", "jpeg"],
   },
 });
 

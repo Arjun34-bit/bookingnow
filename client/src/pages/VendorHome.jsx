@@ -45,7 +45,7 @@ const VendorHome = () => {
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
-        <h1 className="text-2xl font-bold text-center">BookingNow.com</h1>
+        <h1 className="text-2xl font-bold text-center">BookNow.com</h1>
 
         <nav className="mt-10">
           <div className="flex items-center space-x-2 px-4 py-2 hover:bg-gray-700 rounded">
