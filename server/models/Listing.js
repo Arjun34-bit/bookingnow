@@ -15,7 +15,7 @@ const ListingSchema = new mongoose.Schema(
       default: "https://hotel.easemytrip.com/img/roomimage.jpg",
     },
     approved: { type: Boolean, default: true },
-    trending: { tpe: boolean, default: false },
+    trending: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
