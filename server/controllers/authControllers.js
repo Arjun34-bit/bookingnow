@@ -30,23 +30,24 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
-    const user = await User.findOne({ email });
+    let user;
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      const vendor = await Vendor.findOne({ email });
-      if (!vendor || !(await bcrypt.compare(password, vendor.password))) {
-        return res.status(404).json({ message: "Invalid credentials" });
-      } else {
-        const token = jwt.sign(
-          { userId: vendor._id, role: vendor.role },
-          process.env.JWT_SECRET,
-          { expiresIn: "1d" }
-        );
-        res.json({ token, role: vendor.role, name: vendor.name });
-      }
-      // return res.status(404).json({ message: "Invalid credentials" });
+    if (role == "customer") {
+      user = await User.findOne({ email });
+    } else if (role == "vendor") {
+      user = await Vendor.findOne({ email });
+    } else {
+      return res.status(400).json({ message: "Role is neccessary" });
+    }
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (!(await bcrypt.compare(password, user.password))) {
+      return res.status(404).json({ message: "Invalid credentials" });
     } else {
       const token = jwt.sign(
         { userId: user._id, role: user.role },

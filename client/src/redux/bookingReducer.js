@@ -94,6 +94,7 @@ export const changeBookingStatus = (userData) => async (dispatch) => {
 export const getAllBookingVendor = (userData) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
+    console.log(userData);
     const config = {
       headers: {
         Authorization: `Bearer ${userData?.token}`,

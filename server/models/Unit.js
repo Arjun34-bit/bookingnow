@@ -13,7 +13,6 @@ const UnitSchema = new mongoose.Schema(
     price: Number,
     images: {
       type: String,
-      default: "https://hotel.easemytrip.com/img/roomimage.jpg",
     },
     available: { type: Boolean, default: true },
     atSale: { type: Boolean, default: false },

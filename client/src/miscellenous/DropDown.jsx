@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const DropDown = ({ role }) => {
   const user = useSelector((state) => state?.user);
 
-  console.log(user);
+  // console.log(user);
 
   const navigate = useNavigate();
 

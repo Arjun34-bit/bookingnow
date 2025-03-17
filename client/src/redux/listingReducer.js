@@ -5,8 +5,10 @@ import { URL } from "../constants/constants";
 export const createListing = (userData) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
+    console.log(userData);
     const config = {
       headers: {
+        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${userData?.token}`,
       },
     };

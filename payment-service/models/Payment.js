@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const PaymentSchema = new mongoose.Schema(
   {
+    razorPayId: { type: mongoose.Schema.Types.ObjectId, required: true },
     bookingId: { type: mongoose.Schema.Types.ObjectId, required: true },
     amount: { type: Number, required: true },
     status: {

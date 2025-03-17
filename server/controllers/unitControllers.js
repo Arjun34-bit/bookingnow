@@ -22,7 +22,7 @@ const createUnit = async (req, res) => {
       name,
       capacity,
       price,
-      image: imageUrl,
+      images: imageUrl,
     });
 
     await newUnit.save();

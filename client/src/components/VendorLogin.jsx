@@ -12,11 +12,9 @@ const VendorLogin = () => {
 
   const user = useSelector((state) => state?.user);
 
-  console.log(user);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser({ email, password }));
+    dispatch(loginUser({ email, password, role: "vendor" }));
     if (!user?.user || !user?.error) {
       alert(user?.error || "Something Went Wrong");
     } else {

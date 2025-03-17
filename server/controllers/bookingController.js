@@ -81,6 +81,8 @@ const getAllBookings = async (req, res) => {
   try {
     const user = await Vendor.findById(req.user.userId);
 
+    console.log(user);
+
     if (user.role === "customer") {
       return res
         .status(401)

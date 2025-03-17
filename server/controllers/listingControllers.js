@@ -39,7 +39,7 @@ const createListing = async (req, res) => {
         ? facilities.split(",")
         : [],
       startingPrice,
-      image: imageUrl,
+      images: imageUrl,
     });
 
     await newListing.save();
