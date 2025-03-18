@@ -7,6 +7,7 @@ export const createUnit = (userData) => async (dispatch) => {
     dispatch(setLoading(true));
     const config = {
       headers: {
+        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${userData?.token}`,
       },
     };
