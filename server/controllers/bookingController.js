@@ -81,8 +81,6 @@ const getAllBookings = async (req, res) => {
   try {
     const user = await Vendor.findById(req.user.userId);
 
-    console.log(user);
-
     if (user.role === "customer") {
       return res
         .status(401)
@@ -94,7 +92,7 @@ const getAllBookings = async (req, res) => {
     if (!listings.length) {
       return res
         .status(404)
-        .json({ message: "No listings found for this user" });
+        .json({ message: "No bookings found for this user" });
     }
 
     const listingIds = listings.map((listing) => listing._id);

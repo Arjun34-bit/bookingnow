@@ -15,7 +15,7 @@ const VendorLogin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser({ email, password, role: "vendor" }));
-    if (!user?.user || !user?.error) {
+    if (user?.error || !user?.user) {
       alert(user?.error || "Something Went Wrong");
     } else {
       navigate("/vendor/home");

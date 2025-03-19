@@ -15,6 +15,10 @@ const BookingSchema = new mongoose.Schema(
       type: String,
       default: "CASH",
     },
+    paid: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

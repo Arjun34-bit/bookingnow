@@ -8,6 +8,10 @@ const listingRoutes = require("./routes/listingRoutes");
 const unitRoutes = require("./routes/unitRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 
+const { createTopics } = require("./kafka-service/admin");
+
+const colors = require("colors");
+
 const app = express();
 
 // Middleware
@@ -16,6 +20,9 @@ app.use(cors());
 
 // Database Connection
 connectDB();
+
+// Creating Topics
+// createTopics();
 
 // Routes
 
@@ -27,4 +34,6 @@ app.use("/api/listing", listingRoutes);
 
 // Start Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Server running on port ${PORT}`.white.bold)
+);

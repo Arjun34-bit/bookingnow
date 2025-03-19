@@ -40,12 +40,9 @@ const BookingHistory = ({ role }) => {
 
   useEffect(() => {
     if (role === "vendor") {
-      console.log(user);
-      console.log("Fetching vendor bookings...");
-      dispatch(getAllBookingVendor({ token: user.token }));
+      dispatch(getAllBookingVendor({ token: user?.token }));
     } else {
-      console.log("Fetching user bookings...");
-      dispatch(getBookingByUser({ token: user.token }));
+      dispatch(getBookingByUser({ token: user?.token }));
     }
   }, [role, user?.token, dispatch]);
 
@@ -67,8 +64,9 @@ const BookingHistory = ({ role }) => {
                   <th className="py-3 px-4 text-left">Price</th>
                   <th className="py-3 px-4 text-left">Booking Date</th>
                   <th className="py-3 px-4 text-left">Status</th>
-                  <th className="py-3 px-4 text-left">Payment</th>
-                  <th className="py-3 px-4 text-left">Action</th>
+                  <th className="py-3 px-4 text-left">Payment Mode</th>
+                  <th className="py-3 px-4 text-center">Action</th>
+                  <th className="py-3 px-4 text-left">Payment Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -134,6 +132,35 @@ const BookingHistory = ({ role }) => {
                         </span>
                       )}
                     </td>
+                    {role !== "vendor" ? (
+                      <td className="py-3 px-2 text-center">
+                        {!booking.paid ? (
+                          <>
+                            <button
+                              // onClick={() => cancelBookings(booking?._id)}
+                              className="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 transition w-24 h-8"
+                            >
+                              Pay Now
+                            </button>
+                          </>
+                        ) : (
+                          <span className="text-green-400">{"Paid"}</span>
+                        )}
+                      </td>
+                    ) : (
+                      <>
+                        {!booking.paid ? (
+                          <button
+                            // onClick={() => cancelBookings(booking?._id)}
+                            className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600 transition w-36 h-8"
+                          >
+                            Change Status
+                          </button>
+                        ) : (
+                          <span className="text-gray-400">{"Paid"}</span>
+                        )}
+                      </>
+                    )}
                   </tr>
                 ))}
               </tbody>

@@ -24,7 +24,9 @@ const VendorHome = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const listings = useSelector((state) => state?.listing?.loading);
+  const user = useSelector((state) => state?.user);
+
+  console.log(user);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
