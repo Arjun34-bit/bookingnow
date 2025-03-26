@@ -26,7 +26,7 @@ connectDB();
 
 // Routes
 
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
   res.send(`<html>
     <head>
       <title>Success</title>
