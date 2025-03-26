@@ -22,7 +22,7 @@ app.use(cors());
 connectDB();
 
 // Creating Topics
-// createTopics();
+createTopics();
 
 // Routes
 

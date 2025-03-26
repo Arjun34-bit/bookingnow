@@ -19,7 +19,7 @@ export const createBooking = (userData) => async (dispatch) => {
     dispatch(setBooking(data));
     dispatch(setLoading(false));
   } catch (error) {
-    alert({ Error: error.response?.data?.message });
+    alert({ Error: error.response?.data?.message.toString() });
     dispatch(
       setError(error.response?.data?.message || "Listing Fetching Failed")
     );
