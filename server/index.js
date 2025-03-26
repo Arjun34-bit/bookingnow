@@ -26,9 +26,8 @@ connectDB();
 
 // Routes
 
-app.use(
-  "/",
-  <html>
+app.use("/", (req, res) => {
+  res.send(`<html>
     <head>
       <title>Success</title>
       <body
@@ -42,8 +41,8 @@ app.use(
         <div style={{ fontWeight: "600" }}>API Running Successfully</div>
       </body>
     </head>
-  </html>
-);
+  </html>`);
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/reviews", reviewRoutes);
