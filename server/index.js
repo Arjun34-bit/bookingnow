@@ -26,6 +26,25 @@ connectDB();
 
 // Routes
 
+app.use(
+  "/",
+  <html>
+    <head>
+      <title>Success</title>
+      <body
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div style={{ fontWeight: "600" }}>API Running Successfully</div>
+      </body>
+    </head>
+  </html>
+);
+
 app.use("/api/auth", authRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/bookings", bookingRoutes);
