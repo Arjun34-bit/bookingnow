@@ -30,7 +30,8 @@ app.get("/", (req, res) => {
   res.send(`<html>
     <head>
       <title>Success</title>
-      <body
+    </head>
+    <body
         style={{
           display: "flex",
           justifyContent: "center",
@@ -40,7 +41,6 @@ app.get("/", (req, res) => {
       >
         <div style={{ fontWeight: "600" }}>API Running Successfully</div>
       </body>
-    </head>
   </html>`);
 });
 
