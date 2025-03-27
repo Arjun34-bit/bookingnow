@@ -20,7 +20,7 @@ const UnitFormModal = ({ isOpen, onClose, onSubmit, listingId }) => {
       setImagePreview(URL.createObjectURL(file));
       setValue("listingId", listingId);
       setValue("token", user?.token);
-      setValue("images", file);
+      setValue("image", file);
     }
   };
 
@@ -28,7 +28,7 @@ const UnitFormModal = ({ isOpen, onClose, onSubmit, listingId }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
         <h2 className="text-2xl font-bold mb-4">Add Unit</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
@@ -75,6 +75,18 @@ const UnitFormModal = ({ isOpen, onClose, onSubmit, listingId }) => {
             <input
               type="number"
               {...register("price", { required: "Price is required" })}
+              className="w-full p-2 border rounded"
+            />
+            {errors.price && (
+              <p className="text-red-500">{errors.price.message}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="block font-medium">Count</label>
+            <input
+              type="number"
+              {...register("count")}
               className="w-full p-2 border rounded"
             />
             {errors.price && (

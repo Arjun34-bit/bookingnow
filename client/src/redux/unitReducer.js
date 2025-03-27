@@ -26,7 +26,6 @@ export const getUnitByListing = (userData) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
     const { data } = await axios.get(`${URL}/units/${userData}`);
-    console.log(data);
     dispatch(setUnits(data));
     dispatch(setLoading(false));
   } catch (error) {

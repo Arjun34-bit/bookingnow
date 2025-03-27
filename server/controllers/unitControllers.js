@@ -10,7 +10,7 @@ const createUnit = async (req, res) => {
       return res.status(401).json({ message: "Access Denied" });
     }
 
-    const { listingId, type, name, capacity, price } = req.body;
+    const { listingId, type, name, capacity, price, count } = req.body;
 
     const imageUrl = req.file
       ? req.file.path
@@ -23,6 +23,7 @@ const createUnit = async (req, res) => {
       capacity,
       price,
       images: imageUrl,
+      count,
     });
 
     await newUnit.save();

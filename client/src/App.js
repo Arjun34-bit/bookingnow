@@ -19,6 +19,7 @@ const ViewListing = lazy(() => import("./pages/ViewListing"));
 const ViewRoom = lazy(() => import("./pages/ViewRoom"));
 const BookingPage = lazy(() => import("./pages/Booking"));
 const BookingHistory = lazy(() => import("./pages/BookingHistory"));
+const CartPage = lazy(() => import("./pages/CartPage"));
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -47,6 +48,7 @@ const App = () => {
           <Route path="/room/:id" element={<ViewRoom />} />
           <Route path="/book/:id" element={<BookingPage />} />
           <Route path="/booking-history" element={<BookingHistory />} />
+          <Route path="/my-cart" element={<CartPage />} />
           {/* Vendor Route */}
           <Route path="/vendor" element={<Vendor />} />
           <Route path="/vendor/home" element={<VendorHome />} />

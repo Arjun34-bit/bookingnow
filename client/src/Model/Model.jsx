@@ -5,9 +5,6 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { useLocation } from "react-router-dom";
-import Register from "../components/Login";
 import Login from "../components/Login";
 import { useDispatch } from "react-redux";
 import { openModal } from "../redux/authReducer";

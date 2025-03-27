@@ -4,16 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getVendorListing } from "../redux/listingReducer";
 import UnitFormModal from "./UnitFormModal";
 import { createUnit, getUnitByListing } from "../redux/unitReducer";
-import { getUnitCount } from "../helper/countHelper";
 
-const ListingTable = ({ onDeleteListing, onAddUnit, fetchListing }) => {
+const ListingTable = ({ onDeleteListing, fetchListing }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedListing, setSelectedListing] = useState(null);
   const [unitCounts, setUnitCounts] = useState({});
 
   const user = useSelector((state) => state?.user?.user);
   const listings = useSelector((state) => state?.listing?.vendorListing);
-  const units = useSelector((state) => state?.unit?.units);
 
   const dispatch = useDispatch();
 
@@ -29,7 +27,6 @@ const ListingTable = ({ onDeleteListing, onAddUnit, fetchListing }) => {
 
   useEffect(() => {
     dispatch(getVendorListing(user?.token));
-    // dispatch(getUnitByListing(listings?._id));
   }, []);
 
   useEffect(() => {
@@ -47,16 +44,25 @@ const ListingTable = ({ onDeleteListing, onAddUnit, fetchListing }) => {
       const fetchUnitCounts = async () => {
         const counts = {};
         for (const listing of listings) {
-          const units = dispatch(getUnitByListing(listing._id));
-          console.log(units.length);
-          counts[listing._id] = units.length;
+          await dispatch(getUnitByListing(listing._id));
         }
-        // console.log(counts);
-        setUnitCounts(counts);
       };
       fetchUnitCounts();
     }
   }, [dispatch, listings]);
+
+  const listingCount = useSelector((state) => state?.unit?.units);
+
+  useEffect(() => {
+    const counts = {};
+    listingCount.forEach((unit) => {
+      counts[unit.listingId] = (counts[unit.listingId] || 0) + unit.count;
+    });
+    setUnitCounts((prevCounts) => ({
+      ...prevCounts,
+      ...counts,
+    }));
+  }, [listingCount]);
 
   return (
     <div className="container mx-auto p-6">
@@ -82,7 +88,7 @@ const ListingTable = ({ onDeleteListing, onAddUnit, fetchListing }) => {
                 <td className="p-3">{listing.address}</td>
                 <td className="p-3">{listing.contact}</td>
                 <td className="p-3">₹{listing.startingPrice}</td>
-                <td className="p-3">{units ? units.length : 0 || 0}</td>
+                <td className="p-3">{unitCounts[listing?._id] || 0}</td>
                 <td className="p-3 flex justify-center space-x-2">
                   <button
                     onClick={() => openModal(listing)}

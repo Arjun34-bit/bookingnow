@@ -34,6 +34,11 @@ const Navbar = () => {
             className="rounded-full w-6 h-6 object-cover"
           />
           <li>
+            <Link to="/my-cart" className="p-1 hover:text-gray-300">
+              🛒Cart
+            </Link>
+          </li>
+          <li>
             <Link to="/vendor" className="p-1 hover:text-gray-300">
               List Your Property
             </Link>

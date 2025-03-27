@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { loginUser } from "../redux/authReducer";
+import { loginUser, openModal } from "../redux/authReducer";
 import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
@@ -18,6 +18,7 @@ const Login = () => {
     if (user?.error) {
       alert(user?.error);
     }
+    dispatch(openModal());
   };
 
   return (

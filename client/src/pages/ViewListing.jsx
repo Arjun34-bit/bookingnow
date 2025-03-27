@@ -83,6 +83,7 @@ const ViewListing = () => {
                     <p className="text-gray-500">
                       Capacity: {unit.capacity} people
                     </p>
+                    <p className="text-gray-500">Availablity: {unit?.count}</p>
                     <p className="text-gray-600 font-bold">
                       💰 Price: ₹{unit.price}
                     </p>

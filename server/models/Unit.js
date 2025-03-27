@@ -17,6 +17,8 @@ const UnitSchema = new mongoose.Schema(
     available: { type: Boolean, default: true },
     atSale: { type: Boolean, default: false },
     discountPercentage: { type: Number, default: 0 },
+    count: { type: Number, default: 1 },
+    noOfBookings: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
