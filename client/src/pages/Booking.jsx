@@ -10,8 +10,6 @@ const BookingPage = () => {
   const room = useSelector((state) => state?.unit?.unit);
   const user = useSelector((state) => state?.user?.user);
 
-  console.log(user);
-
   const dispatch = useDispatch();
 
   const [bookingDate, setBookingDate] = useState("");

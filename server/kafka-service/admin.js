@@ -1,24 +1,29 @@
-const { client } = require("./kafka");
+// const { client } = require("./kafka");
 
-exports.createTopics = async () => {
-  const admin = client.admin();
-  await admin.connect();
+// exports.createTopics = async () => {
+//   const admin = client.admin();
+//   await admin.connect();
 
-  console.log("Kafka Admin Connected".blue);
+//   console.log("Kafka Admin Connected".blue);
 
-  try {
-    await admin.createTopics({
-      topics: [
-        { topic: "booking-created", numPartitions: 3 },
-        { topic: "payment-processed", numPartitions: 3 },
-      ],
-    });
-    console.log("Kafka topics created successfully!".green.bold);
-  } catch (error) {
-    console.error("Error creating topics:", error);
-  } finally {
-    await admin.disconnect();
-  }
-};
+//   try {
+//     // Fetch the list of existing topics
+//     const existingTopics = await admin.listTopics();
 
-// module.exports = { createTopics };
+//     const topicsToCreate = [
+//       { topic: "booking-created", numPartitions: 1 },
+//       { topic: "payment-processed", numPartitions: 1 },
+//     ].filter((topic) => !existingTopics.includes(topic.topic));
+
+//     if (topicsToCreate.length > 0) {
+//       await admin.createTopics({ topics: topicsToCreate });
+//       console.log("Kafka topics created successfully!".blue.bold);
+//     } else {
+//       console.log("Topics already exist, skipping creation.".yellow);
+//     }
+//   } catch (error) {
+//     console.error("Error creating topics:", error);
+//   } finally {
+//     await admin.disconnect();
+//   }
+// };

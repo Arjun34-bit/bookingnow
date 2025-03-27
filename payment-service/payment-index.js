@@ -1,16 +1,20 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const color = require("color");
+const colors = require("colors");
+// const { startConsumer } = require("./kafka/consumer");
 
 const app = express();
 dotenv.config();
 
 const PORT = process.env.PORT || 5001;
 
-app.use("/pay-now", () => {
-  console.log("Payment Done");
+// startConsumer();
+
+// Express Route - Start Consumer only when needed
+app.get("/pay-now", async (req, res) => {
+  console.log("Payment request received");
+  await startConsumer();
+  res.send("Payment Processing Started");
 });
 
-app.listen(PORT, () =>
-  console.log(`Payment Service Started at Port1 ${PORT}`.yellow.bold)
-);
+app.listen(PORT, () => console.log(`Payment Service Started at Port ${PORT}`));
