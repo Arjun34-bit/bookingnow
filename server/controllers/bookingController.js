@@ -1,4 +1,4 @@
-const { kafkaProducer } = require("../kafka-service/producer");
+// const { kafkaProducer } = require("../kafka-service/producer");
 const Booking = require("../models/Booking");
 const Listing = require("../models/Listing");
 const Unit = require("../models/Unit");
@@ -42,7 +42,7 @@ const createBooking = async (req, res) => {
     await unit.save();
 
     await newBooking.save();
-    await kafkaProducer("booking-created", JSON.stringify(newBooking));
+    // await kafkaProducer("booking-created", JSON.stringify(newBooking));
     res
       .status(201)
       .json({ message: "Booking created successfully", booking: newBooking });

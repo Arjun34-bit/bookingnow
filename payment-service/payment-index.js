@@ -1,14 +1,14 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const colors = require("colors");
-const { startConsumer } = require("./kafka/consumer");
+// const { startConsumer } = require("./kafka/consumer");
 
 const app = express();
 dotenv.config();
 
 const PORT = process.env.PORT || 5001;
 
-startConsumer();
+// startConsumer();
 
 // Express Route - Start Consumer only when needed
 app.get("/pay-now", async (req, res) => {
