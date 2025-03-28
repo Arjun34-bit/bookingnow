@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../redux/authReducer";
+import RoomSearch from "../miscellenous/RoomSearch";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,9 @@ const Home = () => {
     <div className="bg-gray-100 min-h-screen">
       {/* Hero Section */}
       <Swipers />
+      <div className="absolute flex justify-center items-center w-full px-4 z-10 left-1/2 transform -translate-x-1/2 top-[470px]">
+        <RoomSearch />
+      </div>
 
       {/* Modal Section */}
       {user?.modal === true ? (
@@ -31,7 +35,7 @@ const Home = () => {
       )}
 
       {/* Booking Showcase */}
-      <div className="@apply flex justify-center items-center gap-4">
+      <div className="@apply flex justify-center items-center gap-4 mt-2">
         <div className="p-1 bg-blue-500 text-white rounded-[10%] @apply flex gap-1">
           <HomeModernIcon className="w-4 h-4 mt-1" />
           <Link to="/listing?type=hotel" className="">
