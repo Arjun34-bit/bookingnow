@@ -8,11 +8,16 @@ const ListingFormModal = ({ isOpen, onClose, onSubmit }) => {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm();
 
   const [imagePreview, setImagePreview] = useState(null);
 
   const user = useSelector((state) => state?.user?.user);
+
+  const nameValue = watch("pet");
+
+  // console.log(nameValue);
 
   // Handle Image Upload
   const handleImageChange = (e) => {
@@ -147,6 +152,15 @@ const ListingFormModal = ({ isOpen, onClose, onSubmit }) => {
               {...register("description")}
               className="w-full p-2 border rounded h-24"
             ></textarea>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <label className="font-medium">Pet Accomodation</label>
+            <input
+              type="checkbox"
+              {...register("pet")}
+              className="border rounded h-24"
+            ></input>
           </div>
 
           {/* Buttons */}
