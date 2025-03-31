@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getUnitById } from "../redux/unitReducer";
+import { setBookingDates, setCount } from "../redux/variableReducer";
 
 const ViewRoom = () => {
   const { id } = useParams();
@@ -10,13 +11,19 @@ const ViewRoom = () => {
 
   const room = useSelector((state) => state?.unit?.unit);
 
-  const dispatch = useDispatch();
+  // const count = useSelector((state) => state?.variable);
 
-  console.log(room);
+  const [bookingDate, setBookingDate] = useState({ checkIn: "", checkOut: "" });
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUnitById(id));
   }, []);
+
+  useEffect(() => {
+    dispatch(setBookingDates(bookingDate));
+  }, [bookingDate]);
 
   if (!room) {
     return (
@@ -33,15 +40,27 @@ const ViewRoom = () => {
     if (op === "add") {
       if (counts < room?.count) {
         setCounts((prev) => prev + 1);
+        dispatch(setCount("add"));
       }
     } else {
-      if (counts < 1) {
+      if (counts <= 1) {
+        setCounts(0);
+        dispatch(setCount("sub"));
         setCartInc(false);
         return;
       }
       if (counts > 0) {
         setCounts((prev) => prev - 1);
+        dispatch(setCount("sub"));
       }
+    }
+  };
+
+  const handlePrice = (price) => {
+    if (counts > 0) {
+      return price * counts;
+    } else {
+      return price;
     }
   };
 
@@ -66,17 +85,46 @@ const ViewRoom = () => {
           </p>
           <p className="text-gray-700 mt-4">1️⃣ Availability: {room?.count}</p>
           <p className="text-gray-800 font-bold mt-2">
-            💰 Price: ₹{room.price} / night
+            💰 Price: ₹ {handlePrice(room?.price)} / night
           </p>
 
           {/* Availability */}
-          <p
+          {/* <p
             className={`mt-4 font-semibold ${
               room.available ? "text-green-600" : "text-red-500"
             }`}
           >
             {room.available ? "✅ Available for Booking" : "⏳ Not Available"}
-          </p>
+          </p> */}
+
+          {/* Booking Date Selection */}
+          <div className="flex mt-4 gap-1">
+            <label className="text-gray-600 text-[10px] font-semibold">
+              CheckIn
+            </label>
+            <input
+              type="date"
+              className="mt-2 border border-gray-300 px-3 py-2 rounded-md w-1/2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              value={bookingDate.checkIn}
+              onChange={(e) =>
+                setBookingDate((prev) => ({ ...prev, checkIn: e.target.value }))
+              }
+            />
+            <label className="text-gray-600 text-[10px] font-semibold">
+              CheckOut
+            </label>
+            <input
+              type="date"
+              className="mt-2 border border-gray-300 px-3 py-2 rounded-md w-1/2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              value={bookingDate.checkOut}
+              onChange={(e) =>
+                setBookingDate((prev) => ({
+                  ...prev,
+                  checkOut: e.target.value,
+                }))
+              }
+            />
+          </div>
 
           {/* Book Room Button */}
           {room.available ? (
@@ -103,7 +151,7 @@ const ViewRoom = () => {
                   className="mt-6 w-full bg-indigo-600 text-white py-3 rounded-md hover:bg-indigo-700 transition"
                   onClick={addToCart}
                 >
-                  🛒 Add to Cart
+                  {room.type === "table" ? "Reserve" : "Book"}
                 </button>
               )}
             </Link>
@@ -114,6 +162,16 @@ const ViewRoom = () => {
             >
               Room Not Available
             </button>
+          )}
+
+          {counts > 0 ? (
+            <Link to={`/book/${room._id}`}>
+              <button className="mt-6 w-full bg-gray-300 text-black py-3 rounded-md cursor">
+                {"Next"}
+              </button>
+            </Link>
+          ) : (
+            ""
           )}
         </div>
       </div>

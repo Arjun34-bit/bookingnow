@@ -12,7 +12,7 @@ const BookingPage = () => {
 
   const dispatch = useDispatch();
 
-  const [bookingDate, setBookingDate] = useState("");
+  // const [bookingDate, setBookingDate] = useState({ checkIn: "", checkOut: "" });
   const [showDialog, setShowDialog] = useState(false);
   const [status, setStatus] = useState(null);
 
@@ -65,17 +65,30 @@ const BookingPage = () => {
           </p>
 
           {/* Booking Date Selection */}
-          <div className="mt-4">
-            <label className="block text-gray-600 font-semibold">
-              Select Booking Date:
+          {/* <div className="flex mt-4 gap-1">
+            <label className="text-gray-600 text-[10px] font-semibold">
+              CheckIn
             </label>
             <input
               type="date"
-              className="mt-2 border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              value={bookingDate}
-              onChange={(e) => setBookingDate(e.target.value)}
+              className="mt-2 border border-gray-300 px-3 py-2 rounded-md w-1/2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              value={bookingDate.checkIn}
+              onChange={(e) =>
+                setBookingDate((prev) => ({ ...prev, checkIn: e.target.value }))
+              }
             />
-          </div>
+            <label className="text-gray-600 text-[10px] font-semibold">
+              CheckOut
+            </label>
+            <input
+              type="date"
+              className="mt-2 border border-gray-300 px-3 py-2 rounded-md w-1/2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              value={bookingDate.checkOut}
+              onChange={(e) =>
+                setBookingDate((prev) => ({ ...prev, chekOut: e.target.value }))
+              }
+            />
+          </div> */}
 
           {/* Booking Button */}
           {user ? (
