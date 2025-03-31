@@ -44,16 +44,27 @@ const ViewListing = () => {
           {/* Address */}
           <p className="text-gray-600 mt-2">📍 {listing.address}</p>
 
+          {/* Check-In and Check-Out Details */}
+          <div className="mt-4">
+            <div>
+              <span>
+                Check-in :<b>10:00AM</b>
+              </span>{" "}
+              <span>
+                Check-Out :<b>10:00AM</b>
+              </span>
+            </div>
+          </div>
+
           {/* Description */}
           <p className="text-gray-700 mt-4">{listing.description}</p>
-
           {/* Facilities */}
           <h3 className="text-lg font-semibold mt-6">Facilities:</h3>
           <div className="flex flex-wrap mt-2">
             {listing.facilities.map((facility, index) => (
               <span
                 key={index}
-                className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
+                className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-3.5 py-1.5 rounded"
               >
                 {facility}
               </span>

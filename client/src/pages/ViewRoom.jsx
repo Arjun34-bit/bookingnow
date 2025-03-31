@@ -35,7 +35,7 @@ const ViewRoom = () => {
         setCounts((prev) => prev + 1);
       }
     } else {
-      if (counts === 0) {
+      if (counts < 1) {
         setCartInc(false);
         return;
       }
@@ -58,15 +58,15 @@ const ViewRoom = () => {
         <div className="p-6">
           {/* Room Name */}
           <h1 className="text-3xl font-bold text-gray-800">{room.name}</h1>
-          <p className="text-gray-600 mt-2">🏨 Room Type: {room.type}</p>
+          <p className="text-gray-600 mt-2">🏨Type: {room.type}</p>
 
           {/* Capacity & Price */}
           <p className="text-gray-700 mt-4">
-            👥 Capacity: {room.capacity} people
+            👥 Capacity: {room.capacity} Adult 0 Child
           </p>
           <p className="text-gray-700 mt-4">1️⃣ Availability: {room?.count}</p>
           <p className="text-gray-800 font-bold mt-2">
-            💰 Price: ₹{room.price} per night
+            💰 Price: ₹{room.price} / night
           </p>
 
           {/* Availability */}

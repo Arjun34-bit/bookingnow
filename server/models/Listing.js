@@ -15,6 +15,10 @@ const ListingSchema = new mongoose.Schema(
     },
     approved: { type: Boolean, default: true },
     trending: { type: Boolean, default: false },
+    timeout: {
+      checkIn: { type: String, required: true },
+      checkOut: { type: String, required: true },
+    },
   },
   { timestamps: true }
 );
