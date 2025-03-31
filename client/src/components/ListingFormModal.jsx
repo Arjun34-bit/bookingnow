@@ -15,7 +15,7 @@ const ListingFormModal = ({ isOpen, onClose, onSubmit }) => {
 
   const user = useSelector((state) => state?.user?.user);
 
-  const nameValue = watch("pet");
+  // const nameValue = watch("pet");
 
   // console.log(nameValue);
 
@@ -126,6 +126,25 @@ const ListingFormModal = ({ isOpen, onClose, onSubmit }) => {
               </select>
             </div>
 
+            {/* Nearby and Distance  */}
+
+            <div className="flex items-center gap-2">
+              <label className="font-medium">Nearby</label>
+              <input
+                type="text"
+                {...register("nearby")}
+                placeholder="landmark"
+                className="w-1/3 p-2 border rounded"
+              ></input>
+              <label className="font-medium">Distance</label>
+              <input
+                type="number"
+                {...register("distance")}
+                placeholder="distance"
+                className="w-1/3 p-2 border rounded"
+              ></input>
+            </div>
+
             {/* Image Upload */}
             <div>
               <label className="block font-medium">Upload Image</label>
@@ -153,6 +172,42 @@ const ListingFormModal = ({ isOpen, onClose, onSubmit }) => {
               className="w-full p-2 border rounded h-24"
             ></textarea>
           </div>
+
+          {/* Offers */}
+          <div className="flex items-center gap-2">
+            <label className="font-medium">Offers</label>
+            <input
+              type="text"
+              {...register("offers")}
+              placeholder="only 16 characters"
+              className="w-1/3 p-2 border rounded"
+            ></input>
+            <label className="font-medium">Discount Percentage</label>
+            <input
+              type="number"
+              {...register("percentage")}
+              className="w-1/3 p-2 border rounded"
+            ></input>
+          </div>
+
+          {/* Check-in and Checkout  */}
+
+          <div className="flex items-center gap-2">
+            <label className="font-medium">Check-In</label>
+            <input
+              type="time"
+              {...register("checkIn")}
+              className="w-1/3 p-2 border rounded"
+            ></input>
+            <label className="font-medium">Check-Out</label>
+            <input
+              type="time"
+              {...register("checkOut")}
+              className="w-1/3 p-2 border rounded"
+            ></input>
+          </div>
+
+          {/* Pet Accomodation  */}
 
           <div className="flex items-center gap-2">
             <label className="font-medium">Pet Accomodation</label>

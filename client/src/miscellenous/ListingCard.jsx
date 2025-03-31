@@ -32,6 +32,10 @@ const ListingCard = ({ listing }) => {
           {listing.address}
         </p>
 
+        <span className="text-[10px] text-gray-600">
+          2.5km from CST Railway Station
+        </span>
+
         {/* Deals */}
         <div className="w-[90px] h-5 bg-green-600 text-white p-1 rounded-lg text-[8px] text-center font-bold mt-1">
           Limited Time Deal

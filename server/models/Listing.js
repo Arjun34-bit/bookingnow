@@ -14,10 +14,15 @@ const ListingSchema = new mongoose.Schema(
       type: String,
     },
     approved: { type: Boolean, default: true },
+    offers: { type: String },
     trending: { type: Boolean, default: false },
     timeout: {
       checkIn: { type: String, required: true },
       checkOut: { type: String, required: true },
+    },
+    nearBy: {
+      landmark: { type: String },
+      distance: { type: Number },
     },
   },
   { timestamps: true }
