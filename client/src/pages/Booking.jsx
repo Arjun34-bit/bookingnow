@@ -12,7 +12,7 @@ const BookingPage = () => {
 
   const dispatch = useDispatch();
 
-  // const [bookingDate, setBookingDate] = useState({ checkIn: "", checkOut: "" });
+  const [bookingDate, setBookingDate] = useState({ checkIn: "", checkOut: "" });
   const [showDialog, setShowDialog] = useState(false);
   const [status, setStatus] = useState(null);
 
@@ -65,7 +65,7 @@ const BookingPage = () => {
           </p>
 
           {/* Booking Date Selection */}
-          {/* <div className="flex mt-4 gap-1">
+          <div className="flex mt-4 gap-1">
             <label className="text-gray-600 text-[10px] font-semibold">
               CheckIn
             </label>
@@ -88,7 +88,7 @@ const BookingPage = () => {
                 setBookingDate((prev) => ({ ...prev, chekOut: e.target.value }))
               }
             />
-          </div> */}
+          </div>
 
           {/* Booking Button */}
           {user ? (
