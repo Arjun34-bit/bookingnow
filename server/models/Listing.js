@@ -15,15 +15,17 @@ const ListingSchema = new mongoose.Schema(
     },
     approved: { type: Boolean, default: true },
     offers: { type: String },
+    percentage: { type: Number },
     trending: { type: Boolean, default: false },
     timeout: {
       checkIn: { type: String, required: true },
       checkOut: { type: String, required: true },
     },
-    nearBy: {
+    nearByes: {
       landmark: { type: String },
       distance: { type: Number },
     },
+    petAccomodation: { type: Boolean },
   },
   { timestamps: true }
 );

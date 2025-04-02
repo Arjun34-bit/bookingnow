@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
@@ -15,7 +15,11 @@ const ListingFormModal = ({ isOpen, onClose, onSubmit }) => {
 
   const user = useSelector((state) => state?.user?.user);
 
-  // const nameValue = watch("pet");
+  const formValue = watch();
+
+  useEffect(() => {
+    console.log(formValue);
+  }, [formValue]);
 
   // console.log(nameValue);
 
@@ -138,7 +142,8 @@ const ListingFormModal = ({ isOpen, onClose, onSubmit }) => {
               ></input>
               <label className="font-medium">Distance</label>
               <input
-                type="number"
+                type="float"
+                step="0.01"
                 {...register("distance")}
                 placeholder="distance"
                 className="w-1/3 p-2 border rounded"

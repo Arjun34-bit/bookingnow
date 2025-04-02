@@ -12,6 +12,13 @@ const createListing = async (req, res) => {
       description,
       facilities,
       startingPrice,
+      pet,
+      checkIn,
+      checkOut,
+      offers,
+      percentage,
+      nearBy,
+      distance,
     } = req.body;
 
     const userRole = await Vendor.findById(req.user.userId);
@@ -40,6 +47,11 @@ const createListing = async (req, res) => {
         : [],
       startingPrice,
       images: imageUrl,
+      offers: offers,
+      petAccomodation: pet,
+      timeout: { checkIn: checkIn, checkOut: checkOut },
+      nearByes: { landmark: nearBy, distance: distance },
+      percentage: percentage,
     });
 
     await newListing.save();
