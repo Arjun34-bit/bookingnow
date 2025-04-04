@@ -11,8 +11,6 @@ const ViewRoom = () => {
 
   const room = useSelector((state) => state?.unit?.unit);
 
-  // const count = useSelector((state) => state?.variable);
-
   const [bookingDate, setBookingDate] = useState({ checkIn: "", checkOut: "" });
 
   const dispatch = useDispatch();
@@ -64,6 +62,8 @@ const ViewRoom = () => {
     }
   };
 
+  const today = new Date().toISOString().split("T")[0];
+
   return (
     <div className="container mx-auto px-4 py-10">
       <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
@@ -109,6 +109,7 @@ const ViewRoom = () => {
               onChange={(e) =>
                 setBookingDate((prev) => ({ ...prev, checkIn: e.target.value }))
               }
+              min={today}
             />
             <label className="text-gray-600 text-[10px] font-semibold">
               CheckOut
@@ -123,6 +124,7 @@ const ViewRoom = () => {
                   checkOut: e.target.value,
                 }))
               }
+              min={bookingDate?.checkIn ? bookingDate?.checkIn : today}
             />
           </div>
 

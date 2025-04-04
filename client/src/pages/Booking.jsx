@@ -4,15 +4,27 @@ import { Link, useParams } from "react-router-dom";
 import { getUnitById } from "../redux/unitReducer";
 import { createBooking } from "../redux/bookingReducer";
 import { openModal } from "../redux/authReducer";
+import { getAllListings } from "../redux/listingReducer";
 
 const BookingPage = () => {
   const { id } = useParams();
   const room = useSelector((state) => state?.unit?.unit);
   const user = useSelector((state) => state?.user?.user);
 
+  const listings = useSelector((state) => state?.listing?.listing);
+  const listing = listings.find((item) => item._id === room?.listingId);
+
+  useEffect(() => {
+    dispatch(getAllListings());
+  }, []);
+
+  const count = useSelector((state) => state?.variable?.count);
+  const date = useSelector((state) => state?.variable?.bookingDates);
+
+  // console.log(listing);
+
   const dispatch = useDispatch();
 
-  const [bookingDate, setBookingDate] = useState({ checkIn: "", checkOut: "" });
   const [showDialog, setShowDialog] = useState(false);
   const [status, setStatus] = useState(null);
 
@@ -27,16 +39,11 @@ const BookingPage = () => {
   }
 
   const handleBooking = () => {
-    if (!bookingDate) {
-      alert("Please select a booking date.");
-      return;
-    }
-
     const bookingDetails = {
       token: user?.token,
       listingId: room.listingId,
       unitId: room._id,
-      bookingDate,
+      date,
     };
 
     dispatch(createBooking(bookingDetails));
@@ -55,41 +62,89 @@ const BookingPage = () => {
           className="w-full h-64 object-cover"
         />
 
-        <div className="p-6">
-          <h1 className="text-3xl font-bold text-gray-800">{room.name}</h1>
-          <p className="text-gray-700 mt-2">
-            👥 Capacity: {room.capacity} people
-          </p>
-          <p className="text-gray-800 font-bold mt-2">
-            💰 Price: ₹{room.price} per night
-          </p>
+        <div className="p-4 border-[1px] border-black mt-2 rounded-lg">
+          <h1 className="text-3xl font-bold text-gray-800">{listing?.name}</h1>
+          <p className="text-gray-700 mt-2">{listing?.address}</p>
 
-          {/* Booking Date Selection */}
-          <div className="flex mt-4 gap-1">
-            <label className="text-gray-600 text-[10px] font-semibold">
-              CheckIn
-            </label>
-            <input
-              type="date"
-              className="mt-2 border border-gray-300 px-3 py-2 rounded-md w-1/2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              value={bookingDate.checkIn}
-              onChange={(e) =>
-                setBookingDate((prev) => ({ ...prev, checkIn: e.target.value }))
-              }
-            />
-            <label className="text-gray-600 text-[10px] font-semibold">
-              CheckOut
-            </label>
-            <input
-              type="date"
-              className="mt-2 border border-gray-300 px-3 py-2 rounded-md w-1/2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              value={bookingDate.checkOut}
-              onChange={(e) =>
-                setBookingDate((prev) => ({ ...prev, chekOut: e.target.value }))
-              }
-            />
+          {/* Reviews and Ratings */}
+          <div className="flex flex-row gap-2">
+            <div className="w-6 h-4 bg-blue-700 text-[12px] text-white rounded-sm text-center">
+              8.1
+            </div>
+            <span className="text-[12px] text-gray-600">Amazing</span>
+            <span className="text-[12px] text-gray-600">149 reviews</span>
           </div>
 
+          {/* Facilities */}
+          <div className="flex flex-wrap mt-2">
+            {listing?.facilities?.map((facility, index) => (
+              <span
+                key={index}
+                className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
+              >
+                {facility}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Two Box  */}
+        <div className="flex justify-between items-center gap-1">
+          <div className="p-6 border-[0.5px] border-gray-400 mt-2 rounded-lg w-1/2">
+            <h5 className="font-semibold text-gray-800">Booking Details</h5>
+            {/* Date and Time  */}
+            <div className="flex justify-between items-center w-full mt-1 gap-1">
+              {/* checkIn */}
+              <div className="block">
+                <span>check-In</span>
+                <p className="text-1xl font-bold">{date?.checkIn}</p>
+                <span className="text-sm">
+                  From{" "}
+                  {listing?.timeout?.checkIn
+                    ? listing?.timeout?.checkIn
+                    : "10:00AM"}
+                </span>
+              </div>
+
+              {/* checkOut */}
+              <div className="block">
+                <span>check-Out</span>
+                <p className="text-1xl font-bold">{date?.checkIn}</p>
+                <p className="text-sm">
+                  Until{" "}
+                  {listing?.timeout?.checkOut
+                    ? listing?.timeout?.checkOut
+                    : "11:00AM"}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-1">
+              <h5 className="font-semibold">Length of Stay :</h5>
+              <p>{count} nights</p>
+            </div>
+            <p className="text-gray-700 mt-2">
+              👥 Capacity: {room.capacity} people
+            </p>
+            <p className="text-gray-800 font-bold mt-2">
+              💰 Price: ₹{room.price} X {count} per night
+            </p>
+          </div>
+
+          <div className="py-3 border-[0.5px] border-gray-400 mt-2 rounded-lg w-1/2 h-60">
+            <h4 className="font-semibold text-1xl p-2">Your Price Summary :</h4>
+            <div className="p-2 bg-blue-300 h-12 w-full flex justify-between items-center">
+              <span className="text-2xl font-bold">Price :</span>
+              <span className="text-2xl font-bold">1,900</span>
+            </div>
+
+            <div className="p-2">
+              <h5 className="text-1xl font-semibold">Bill Information :</h5>
+            </div>
+          </div>
+        </div>
+
+        <div>
           {/* Booking Button */}
           {user ? (
             <button
@@ -120,7 +175,7 @@ const BookingPage = () => {
               Booking Confirmed! ✅
             </h2>
             <p className="text-gray-600 mt-2">
-              Your room has been successfully booked for {bookingDate}.
+              Your room has been successfully booked for {date}.
             </p>
             <div className="flex justify-end mt-4">
               <button

@@ -3,7 +3,11 @@ const mongoose = require("mongoose");
 const ListingSchema = new mongoose.Schema(
   {
     vendorId: { type: mongoose.Schema.Types.ObjectId, ref: "Vendor" },
-    type: { type: String, enum: ["hotel", "restaurants"], required: true },
+    type: {
+      type: String,
+      enum: ["hotel", "restaurants", "hostels", "hostel-cum-hotel"],
+      required: true,
+    },
     name: String,
     address: String,
     contact: Number,

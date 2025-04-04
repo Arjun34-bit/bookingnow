@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ListingCard = ({ listing }) => {
+  console.log(listing);
   return (
     <div className="max-w-sm w-full bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
       {/* Image Section */}
@@ -32,14 +33,22 @@ const ListingCard = ({ listing }) => {
           {listing.address}
         </p>
 
-        <span className="text-[10px] text-gray-600">
-          2.5km from CST Railway Station
-        </span>
+        {listing.nearByes && (
+          <span className="text-[10px] text-gray-600">
+            {listing?.nearByes?.distance ? listing?.nearByes?.distance : 0} km
+            from{" "}
+            {listing?.nearByes?.distance
+              ? listing?.nearByes?.landmark
+              : "not mentioned"}
+          </span>
+        )}
 
         {/* Deals */}
-        <div className="w-[90px] h-5 bg-green-600 text-white p-1 rounded-lg text-[8px] text-center font-bold mt-1">
-          Limited Time Deal
-        </div>
+        {listing?.offers && (
+          <div className="w-[90px] h-5 bg-green-600 text-white p-1 rounded-lg text-[8px] text-center font-bold mt-1">
+            {listing?.offers}
+          </div>
+        )}
 
         {/* Facilities */}
         <div className="flex flex-wrap mt-2">

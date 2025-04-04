@@ -192,6 +192,8 @@ const ListingFormModal = ({ isOpen, onClose, onSubmit }) => {
               type="number"
               {...register("percentage")}
               className="w-1/3 p-2 border rounded"
+              max={100}
+              min={0}
             ></input>
           </div>
 

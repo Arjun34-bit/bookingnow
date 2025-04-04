@@ -48,10 +48,10 @@ const ViewListing = () => {
           <div className="mt-4">
             <div>
               <span>
-                Check-in :<b>10:00AM</b>
+                Check-In :<b>{listing?.timeout?.checkIn}</b>
               </span>{" "}
               <span>
-                Check-Out :<b>10:00AM</b>
+                Check-Out :<b>{listing?.timeout?.checkOut}</b>
               </span>
             </div>
           </div>

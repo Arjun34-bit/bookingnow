@@ -17,7 +17,7 @@ const createListing = async (req, res) => {
       checkOut,
       offers,
       percentage,
-      nearBy,
+      nearby,
       distance,
     } = req.body;
 
@@ -50,7 +50,7 @@ const createListing = async (req, res) => {
       offers: offers,
       petAccomodation: pet,
       timeout: { checkIn: checkIn, checkOut: checkOut },
-      nearByes: { landmark: nearBy, distance: distance },
+      nearByes: { landmark: nearby, distance: distance },
       percentage: percentage,
     });
 
