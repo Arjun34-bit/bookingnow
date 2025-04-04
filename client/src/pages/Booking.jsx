@@ -5,6 +5,7 @@ import { getUnitById } from "../redux/unitReducer";
 import { createBooking } from "../redux/bookingReducer";
 import { openModal } from "../redux/authReducer";
 import { getAllListings } from "../redux/listingReducer";
+import { TicketIcon } from "@heroicons/react/20/solid";
 
 const BookingPage = () => {
   const { id } = useParams();
@@ -21,15 +22,31 @@ const BookingPage = () => {
   const count = useSelector((state) => state?.variable?.count);
   const date = useSelector((state) => state?.variable?.bookingDates);
 
-  // console.log(listing);
+  const checkInDate = new Date(date?.checkIn);
+  const checkOutDate = new Date(date?.checkOut);
+
+  const timeDifference = checkOutDate - checkInDate;
+  const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
 
   const dispatch = useDispatch();
 
   const [showDialog, setShowDialog] = useState(false);
   const [status, setStatus] = useState(null);
 
+  const [finalPrice, setFinalPrice] = useState(0);
+  const [tax, setTax] = useState(0);
+
+  const handlePrice = (price) => {
+    const finalPrices = price * daysDifference;
+    const taxPrice = finalPrices * 0.18;
+    setTax(taxPrice);
+    setFinalPrice(finalPrices);
+    return;
+  };
+
   useEffect(() => {
     dispatch(getUnitById(id));
+    handlePrice(room?.price);
   }, []);
 
   if (!room) {
@@ -89,8 +106,8 @@ const BookingPage = () => {
         </div>
 
         {/* Two Box  */}
-        <div className="flex justify-between items-center gap-1">
-          <div className="p-6 border-[0.5px] border-gray-400 mt-2 rounded-lg w-1/2">
+        <div className="flex justify-between items-center gap-1 h-72">
+          <div className="p-6 border-[0.5px] border-gray-400 mt-2 rounded-lg w-1/2 h-full">
             <h5 className="font-semibold text-gray-800">Booking Details</h5>
             {/* Date and Time  */}
             <div className="flex justify-between items-center w-full mt-1 gap-1">
@@ -121,8 +138,11 @@ const BookingPage = () => {
 
             <div className="mt-1">
               <h5 className="font-semibold">Length of Stay :</h5>
-              <p>{count} nights</p>
+              <p>{daysDifference} nights</p>
             </div>
+            <p className="text-gray-700 mt-2 font-semibold">
+              Selected Room : {room?.name}
+            </p>
             <p className="text-gray-700 mt-2">
               👥 Capacity: {room.capacity} people
             </p>
@@ -131,15 +151,39 @@ const BookingPage = () => {
             </p>
           </div>
 
-          <div className="py-3 border-[0.5px] border-gray-400 mt-2 rounded-lg w-1/2 h-60">
+          <div className="py-3 border-[0.5px] border-gray-400 mt-2 rounded-lg w-1/2 h-full">
             <h4 className="font-semibold text-1xl p-2">Your Price Summary :</h4>
-            <div className="p-2 bg-blue-300 h-12 w-full flex justify-between items-center">
+            <div className="p-2 bg-blue-100 h-12 w-full flex justify-between items-center">
               <span className="text-2xl font-bold">Price :</span>
-              <span className="text-2xl font-bold">1,900</span>
+              <span className="text-2xl font-bold">₹{finalPrice}</span>
             </div>
 
             <div className="p-2">
               <h5 className="text-1xl font-semibold">Bill Information :</h5>
+              <div className="flex justify-between items-center gap-2">
+                <TicketIcon className="w-5 h-5" />
+                <div
+                  className="block
+                 text-sm"
+                >
+                  <span>Excludes ₹ {tax} in taxes and fees</span>
+                  <p>18 % Goods & services tax</p>
+                </div>
+                <p className="text-[12px] text-grey-300 mt-5">₹{tax}</p>
+              </div>
+            </div>
+
+            <div className="p-2 w-full mt-2">
+              <h5 className="font-semibold text-[16px]">
+                Cancellation Charge ?
+              </h5>
+              <span className="text-green-400 text-sm">
+                Free cancellation before May 30
+              </span>
+              <div className="flex justify-between items-center gap-1 mt-2">
+                <p className="text-[12px]">After 12:00 AM on May 30</p>
+                <p className="text-[12px]">₹ 1150</p>
+              </div>
             </div>
           </div>
         </div>
