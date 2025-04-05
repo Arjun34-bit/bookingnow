@@ -45,7 +45,7 @@ const ListingCard = ({ listing }) => {
 
         {/* Deals */}
         {listing?.offers && (
-          <div className="w-[90px] h-5 bg-green-600 text-white p-1 rounded-lg text-[8px] text-center font-bold mt-1">
+          <div className="h-5 bg-green-600 text-white p-0.5 rounded-lg text-[8px] text-center font-bold mt-1">
             {listing?.offers}
           </div>
         )}
