@@ -13,6 +13,7 @@
 //     const topicsToCreate = [
 //       { topic: "booking-created", numPartitions: 1 },
 //       { topic: "payment-processed", numPartitions: 1 },
+//       { topic:"unit-maintain",numPartiontions:1}
 //     ].filter((topic) => !existingTopics.includes(topic.topic));
 
 //     if (topicsToCreate.length > 0) {

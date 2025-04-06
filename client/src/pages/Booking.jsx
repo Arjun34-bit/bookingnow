@@ -19,6 +19,9 @@ const BookingPage = () => {
     dispatch(getAllListings());
   }, []);
 
+  const d = new Date();
+  const currDate = d.toISOString().split("T")[0];
+
   const count = useSelector((state) => state?.variable?.count);
   const date = useSelector((state) => state?.variable?.bookingDates);
 
@@ -60,7 +63,29 @@ const BookingPage = () => {
       token: user?.token,
       listingId: room.listingId,
       unitId: room._id,
-      date,
+      bookingDetails: {
+        date: {
+          checkInDate: checkInDate,
+          checkOutDate: checkOutDate,
+        },
+        timeout: {
+          checkIn: "10:00AM",
+          checkOut: "11:00AM",
+        },
+        lengthOfStay: daysDifference,
+        roomDetails: {
+          name: room?.name,
+          capacity: room?.capacity,
+          noOfRoom: count,
+          basePrice: room?.price,
+          finalPrice: finalPrice,
+          tax: tax,
+          cancellationDetails: {
+            time: "12:00AM",
+            date: currDate,
+          },
+        },
+      },
     };
 
     dispatch(createBooking(bookingDetails));
@@ -126,7 +151,7 @@ const BookingPage = () => {
               {/* checkOut */}
               <div className="block">
                 <span>check-Out</span>
-                <p className="text-1xl font-bold">{date?.checkIn}</p>
+                <p className="text-1xl font-bold">{date?.checkOut}</p>
                 <p className="text-sm">
                   Until{" "}
                   {listing?.timeout?.checkOut
@@ -136,9 +161,9 @@ const BookingPage = () => {
               </div>
             </div>
 
-            <div className="mt-1">
-              <h5 className="font-semibold">Length of Stay :</h5>
-              <p>{daysDifference} nights</p>
+            <div className="mt-1 inline">
+              <span className="font-semibold">Length of Stay : </span>
+              <span>{daysDifference} nights</span>
             </div>
             <p className="text-gray-700 mt-2 font-semibold">
               Selected Room : {room?.name}
@@ -147,7 +172,10 @@ const BookingPage = () => {
               👥 Capacity: {room.capacity} people
             </p>
             <p className="text-gray-800 font-bold mt-2">
-              💰 Price: ₹{room.price} X {count} per night
+              💰 Price: ₹{room.price} X {daysDifference}
+            </p>
+            <p className="text-gray-800 font-bold mt-2">
+              💰 No of Room: ₹{count} X {room?.price} per night
             </p>
           </div>
 
@@ -219,16 +247,25 @@ const BookingPage = () => {
               Booking Confirmed! ✅
             </h2>
             <p className="text-gray-600 mt-2">
-              Your room has been successfully booked for {date}.
+              Your room has been successfully booked for {daysDifference}{" "}
+              {daysDifference > 1 ? " nights" : " night"}.
             </p>
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-end mt-4 gap-2">
+              <button
+                onClick={() => {
+                  setShowDialog(false);
+                }}
+                className="bg-white text-black px-4 py-2 rounded-md transition"
+              >
+                Cancel
+              </button>
               <button
                 onClick={() => {
                   setShowDialog(false);
                 }}
                 className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition"
               >
-                OK
+                Pay Now
               </button>
             </div>
           </div>

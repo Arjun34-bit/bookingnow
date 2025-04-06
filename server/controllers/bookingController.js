@@ -16,7 +16,7 @@ const createBooking = async (req, res) => {
         .json({ message: "Access Denied, This account has not access" });
     }
 
-    const { listingId, unitId, bookingDate } = req.body;
+    const { listingId, unitId, bookingDate, bookingDetails } = req.body;
 
     // Ensure the unit exists and is available
     const unit = await Unit.findOne({
@@ -24,16 +24,21 @@ const createBooking = async (req, res) => {
       listingId: listingId,
       available: true,
     });
-    if (!unit)
+    if (!unit) {
       return res
         .status(400)
         .json({ message: "Selected unit is not available" });
+    }
+
+    if (bookingDetails?.rommDetails?.noOfRoom > unit.count) {
+      return res.status(401).json({ message: "Insufficient Rooms" });
+    }
 
     const newBooking = new Booking({
       customerId: req.user.userId,
       listingId: listingId,
       unitId: unitId,
-      bookingDate,
+      bookingDetails: bookingDetails,
       status: "pending",
     });
 
@@ -42,7 +47,9 @@ const createBooking = async (req, res) => {
     await unit.save();
 
     await newBooking.save();
+    // console.log(newBooking);
     // await kafkaProducer("booking-created", JSON.stringify(newBooking));
+    // await kafkaProducer("unit-maintain", JSON.stringify(newBooking));
     res
       .status(201)
       .json({ message: "Booking created successfully", booking: newBooking });

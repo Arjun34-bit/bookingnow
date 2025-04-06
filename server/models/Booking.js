@@ -7,8 +7,8 @@ const BookingDetailsSchema = new mongoose.Schema(
       checkOutDate: { type: String },
     },
     timeout: {
-      checkIn: { type: Number },
-      checkOut: { type: Number },
+      checkIn: { type: String, default: "10:00AM" },
+      checkOut: { type: String, defalut: "11:00AM" },
     },
     lengthOfStay: { type: Number },
     roomDetails: {
@@ -39,8 +39,8 @@ const BookingSchema = new mongoose.Schema(
     },
     paymentDetails: {
       type: String,
-      enum: ["UPI", "CASH"],
-      default: "CASH",
+      enum: ["ONLINE", "UPI", "CASH"],
+      default: "ONLINE",
     },
     paid: {
       type: Boolean,

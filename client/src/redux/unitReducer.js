@@ -40,7 +40,6 @@ export const getUnitById = (userData) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
     const { data } = await axios.get(`${URL}/units/getUnit/${userData}`);
-    console.log(data);
     dispatch(setUnit(data));
     dispatch(setLoading(true));
   } catch (error) {
