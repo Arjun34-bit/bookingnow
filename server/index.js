@@ -22,7 +22,9 @@ app.use(cors());
 connectDB();
 
 // Creating Topics
-// createTopics();
+if (process.env.DEPLOYMENT === "PROD") {
+  createTopics();
+}
 
 // Routes
 

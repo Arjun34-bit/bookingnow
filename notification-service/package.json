@@ -1,0 +1,19 @@
+{
+  "name": "notification-email",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "kafkajs": "^2.2.4",
+    "nodemailer": "^6.10.0",
+    "nodemon": "^3.1.9"
+  }
+}
