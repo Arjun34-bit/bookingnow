@@ -247,13 +247,14 @@ const BookingPage = () => {
               Booking Confirmed! ✅
             </h2>
             <p className="text-gray-600 mt-2">
-              Your room has been successfully booked for {daysDifference}{" "}
+              Booking Success for {daysDifference}{" "}
               {daysDifference > 1 ? " nights" : " night"}.
             </p>
             <div className="flex justify-end mt-4 gap-2">
               <button
                 onClick={() => {
                   setShowDialog(false);
+                  navigate("/booking-history");
                 }}
                 className="bg-white text-black px-4 py-2 rounded-md transition"
               >

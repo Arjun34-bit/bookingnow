@@ -16,7 +16,7 @@ const createBooking = async (req, res) => {
         .json({ message: "Access Denied, This account has not access" });
     }
 
-    const { listingId, unitId, bookingDate, bookingDetails } = req.body;
+    const { listingId, unitId, bookingDetails } = req.body;
 
     // Ensure the unit exists and is available
     const unit = await Unit.findOne({
@@ -42,15 +42,20 @@ const createBooking = async (req, res) => {
       status: "pending",
     });
 
-    // Mark unit as unavailable
-    // unit.available = false;
     await unit.save();
 
     await newBooking.save();
-    // console.log(newBooking);
-    // await kafkaProducer("booking-created", JSON.stringify(newBooking));
+
     if (process.env.DEPLOYMENT === "PROD") {
       await kafkaProducer("unit-maintain", JSON.stringify(newBooking));
+      await kafkaProducer(
+        "email-service",
+        JSON.stringify({
+          bookingData: newBooking,
+          name: userRole?.name,
+          email: userRole?.email,
+        })
+      );
     }
     res
       .status(201)
