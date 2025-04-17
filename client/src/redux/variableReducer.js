@@ -19,6 +19,8 @@ const variableSlice = createSlice({
         state.count += 1;
       } else if (action.payload === "sub" && state.count > 0) {
         state.count -= 1;
+      } else {
+        state.count = state.count * 0;
       }
     },
     setBookingDetails: (state, action) => {

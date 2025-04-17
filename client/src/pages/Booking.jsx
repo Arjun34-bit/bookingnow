@@ -1,23 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { getUnitById } from "../redux/unitReducer";
 import { createBooking } from "../redux/bookingReducer";
 import { openModal } from "../redux/authReducer";
 import { getAllListings } from "../redux/listingReducer";
 import { TicketIcon } from "@heroicons/react/20/solid";
+import { setCount } from "../redux/variableReducer";
 
 const BookingPage = () => {
   const { id } = useParams();
+
+  const navigate = useNavigate();
+
   const room = useSelector((state) => state?.unit?.unit);
   const user = useSelector((state) => state?.user?.user);
 
   const listings = useSelector((state) => state?.listing?.listing);
   const listing = listings.find((item) => item._id === room?.listingId);
 
+  const location = useLocation();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getAllListings());
   }, []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setCount("null"));
+    };
+  }, [location.pathname]);
 
   const d = new Date();
   const currDate = d.toISOString().split("T")[0];
@@ -30,8 +43,6 @@ const BookingPage = () => {
 
   const timeDifference = checkOutDate - checkInDate;
   const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-
-  const dispatch = useDispatch();
 
   const [showDialog, setShowDialog] = useState(false);
   const [status, setStatus] = useState(null);

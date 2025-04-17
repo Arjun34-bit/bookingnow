@@ -7,18 +7,13 @@ const startConsumer = async () => {
   try {
     if (!consumerInstance) {
       // Avoid multiple instances
-      consumerInstance = client.consumer({ groupId: "test-1" });
+      consumerInstance = client.consumer({ groupId: "payment-unit-group" });
       await consumerInstance.connect();
       console.log("Consumer connected".yellow.bold);
 
-      //   await consumerInstance.subscribe({
-      //     topic: "booking-created",
-      //     fromBeginning: true,
-      //   });
-
       await consumerInstance.subscribe({
         topic: "unit-maintain",
-        fromBeginning: true,
+        fromBeginning: false,
       });
 
       await consumerInstance.run({

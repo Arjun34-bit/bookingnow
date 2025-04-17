@@ -13,7 +13,7 @@ const updateUnitCount = async (data) => {
 
     const updatedUnit = await Unit.findByIdAndUpdate(
       unitId,
-      { count: unit.count - roomCount },
+      { $inc: { count: -roomCount } },
       { new: true }
     );
 

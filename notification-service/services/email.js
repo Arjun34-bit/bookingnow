@@ -1,10 +1,11 @@
-const Email = require("./model/emailData");
+const Email = require("../model/Email");
 
-const emailDBService = async (email, subject, status, count) => {
+const emailDBService = async (email, subject, content, status, count) => {
   try {
     const eData = await Email.create({
       email: email,
       subject: subject,
+      content: content,
       status: status,
       retryCount: count,
     });

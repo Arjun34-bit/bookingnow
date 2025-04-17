@@ -129,7 +129,7 @@ const ViewRoom = () => {
           </div>
 
           {/* Book Room Button */}
-          {room.available ? (
+          {room.available || room.count !== 0 ? (
             // <Link to={`/book/${room._id}`}>
             <Link>
               {cartInc ? (

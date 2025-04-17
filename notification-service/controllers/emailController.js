@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const { emailDBService } = require("../services/email");
 
 const sendEmail = async (data) => {
   try {
@@ -24,35 +25,64 @@ const sendEmail = async (data) => {
     <tr>
       <td style="text-align: center; padding-bottom: 20px;">
         <h1 style="color: #003580; margin-bottom: 5px;">Booking Confirmed!</h1>
-        <p style="color: #555;">We look forward to hosting you.</p>
+        <p style="color: #555;">Hi ${
+          data.name
+        }, we look forward to hosting you.</p>
       </td>
     </tr>
 
     <tr>
       <td style="padding: 20px 0;">
         <h2 style="color: #003580; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 5px;">Booking Details</h2>
-        <p><strong>Check-In:</strong> ${data?.bookingData?.date?.checkInDate} at ${data?.bookingData?.timeout?.checkIn}</p>
-        <p><strong>Check-Out:</strong> ${data?.bookingData?.date?.checkOutDate} at ${data?.bookingData?.timeout?.checkOut}</p>
-        <p><strong>Length of Stay:</strong> ${data?.bookingData?.lengthOfStay} nights</p>
+        <p><strong>Check-In:</strong> ${
+          data.bookingData.bookingDetails.date.checkInDate.split("T")[0]
+        } at ${data.bookingData.bookingDetails.timeout.checkIn}</p>
+        <p><strong>Check-Out:</strong> ${
+          data.bookingData.bookingDetails.date.checkOutDate.split("T")[0]
+        } at ${data.bookingData.bookingDetails.timeout.checkOut}</p>
+        <p><strong>Length of Stay:</strong> ${
+          data.bookingData.bookingDetails.lengthOfStay
+        } night(s)</p>
+        <p><strong>Booking Status:</strong> ${data.bookingData.status}</p>
+        <p><strong>Payment Method:</strong> ${
+          data.bookingData.paymentDetails
+        }</p>
+        <p><strong>Paid:</strong> ${data.bookingData.paid ? "Yes" : "No"}</p>
       </td>
     </tr>
 
     <tr>
       <td style="padding: 20px 0;">
         <h2 style="color: #003580; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 5px;">Room Information</h2>
-        <p><strong>Room Name:</strong> ${data?.bookingData?.roomDetails?.name}</p>
-        <p><strong>Capacity:</strong> ${data?.bookingData?.roomDetails?.capacity} Guests</p>
-        <p><strong>Number of Rooms:</strong> ${data?.bookingData?.roomDetails?.noOfRoom}</p>
-        <p><strong>Base Price:</strong> ${data?.bookingData?.roomDetails?.basePrice}</p>
-        <p><strong>Final Price (incl. tax):</strong> ${data?.bookingData?.roomDetails?.finalPrice}</p>
-        <p><strong>Tax:</strong> ${data?.bookingData?.roomDetails?.tax}</p>
+        <p><strong>Room Name:</strong> ${
+          data.bookingData.bookingDetails.roomDetails.name
+        }</p>
+        <p><strong>Capacity:</strong> ${
+          data.bookingData.bookingDetails.roomDetails.capacity
+        } Guests</p>
+        <p><strong>Number of Rooms:</strong> ${
+          data.bookingData.bookingDetails.roomDetails.noOfRoom
+        }</p>
+        <p><strong>Base Price:</strong> ${
+          data.bookingData.bookingDetails.roomDetails.basePrice
+        }</p>
+        <p><strong>Final Price (incl. tax):</strong> ${
+          data.bookingData.bookingDetails.roomDetails.finalPrice
+        }</p>
+        <p><strong>Tax:</strong> ${
+          data.bookingData.bookingDetails.roomDetails.tax
+        }</p>
       </td>
     </tr>
 
     <tr>
       <td style="padding: 20px 0;">
         <h2 style="color: #003580; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 5px;">Cancellation Policy</h2>
-        <p><strong>Free cancellation until:</strong> ${data?.bookingData?.roomDetails?.cancellationDetails?.date} by ${data?.bookingData?.roomDetails?.cancellationDetails?.time}</p>
+        <p><strong>Free cancellation until:</strong> ${
+          data.bookingData.bookingDetails.roomDetails.cancellationDetails.date
+        } by ${
+      data.bookingData.bookingDetails.roomDetails.cancellationDetails.time
+    }</p>
       </td>
     </tr>
 
@@ -65,8 +95,7 @@ const sendEmail = async (data) => {
   </table>
 
 </body>
-</html>
-`;
+</html>`;
 
     const mailOptions = {
       from: "",

@@ -11,10 +11,8 @@ exports.createTopics = async () => {
     const existingTopics = await admin.listTopics();
 
     const topicsToCreate = [
-      { topic: "booking-created", numPartitions: 1 },
-      { topic: "payment-processed", numPartitions: 1 },
       { topic: "unit-maintain", numPartiontions: 1 },
-      { topic: "booking-confirmation", numPartiontions: 1 },
+      { topic: "email-service", numPartiontions: 1 },
     ].filter((topic) => !existingTopics.includes(topic.topic));
 
     if (topicsToCreate.length > 0) {

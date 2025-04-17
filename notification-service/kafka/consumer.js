@@ -7,13 +7,13 @@ const startConsumer = async () => {
   try {
     if (!consumerInstance) {
       // Avoid multiple instances
-      consumerInstance = client.consumer({ groupId: "test-1" });
+      consumerInstance = client.consumer({ groupId: "email-group" });
       await consumerInstance.connect();
-      console.log("Consumer connected".yellow.bold);
+      console.log("Consumer connected");
 
       await consumerInstance.subscribe({
         topic: "email-service",
-        fromBeginning: true,
+        fromBeginning: false,
       });
 
       await consumerInstance.run({

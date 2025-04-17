@@ -8,7 +8,7 @@ const listingRoutes = require("./routes/listingRoutes");
 const unitRoutes = require("./routes/unitRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 
-// const { createTopics } = require("./kafka-service/admin");
+const { createTopics } = require("./kafka-service/admin");
 
 const colors = require("colors");
 

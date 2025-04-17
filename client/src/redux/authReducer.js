@@ -7,12 +7,12 @@ import Cookies from "js-cookie";
 export const loginUser = (userData) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
-    // const { data } = await axios.post(`${URL}/auth/login`, userData);
-    const { data } = await fetchData({
-      url: `${URL}/auth/login`,
-      method: "post",
-      data: userData,
-    });
+    const { data } = await axios.post(`${URL}/auth/login`, userData);
+    // const { data } = await fetchData({
+    //   url: `${URL}/auth/login`,
+    //   method: "post",
+    //   data: userData,
+    // });
     dispatch(setUser(data));
     dispatch(setLoading(false));
   } catch (error) {
