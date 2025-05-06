@@ -15,6 +15,6 @@ COPY . .
 # Make sure the wait-for-it.sh script is executable
 RUN chmod +x wait-for-it.sh
 
-EXPOSE 5001
+EXPOSE 5000
 
 CMD ["npm","start"]
