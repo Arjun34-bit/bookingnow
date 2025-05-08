@@ -7,7 +7,7 @@ const emailRoutes = require("./routes/emailRoutes");
 dotenv.config();
 const app = express();
 
-const PORT = process.env.PORT || 5002;
+const PORT = process.env.NOTIFICATION_SERVICE_PORT || 5002;
 
 startConsumer();
 

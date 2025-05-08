@@ -6,8 +6,8 @@ const sendEmail = async (data) => {
     const transporter = nodemailer.createTransport({
       service: "Gmail",
       auth: {
-        user: "cellchat86@gmail.com",
-        pass: "lqlwezwpifupnvma",
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
       },
     });
 
@@ -18,22 +18,23 @@ const sendEmail = async (data) => {
   <meta charset="UTF-8">
   <title>Booking Confirmation</title>
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #f6f6f6; padding: 30px;">
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 30px;">
 
-  <table style="max-width: 600px; background: #ffffff; margin: auto; border-radius: 8px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+  <table style="max-width: 600px; background: #ffffff; margin: auto; border-radius: 10px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
     
     <tr>
-      <td style="text-align: center; padding-bottom: 20px;">
-        <h1 style="color: #003580; margin-bottom: 5px;">Booking Confirmed!</h1>
-        <p style="color: #555;">Hi ${
+      <td style="text-align: center; padding-bottom: 30px;">
+        <h1 style="background-color:#6495ED;padding:15px">BookingNow</h1>
+        <h1 style="color: #2c3e50; margin-bottom: 5px;">Your Booking is Confirmed!</h1>
+        <p style="color: #666;">Dear ${
           data.name
-        }, we look forward to hosting you.</p>
+        }, thank you for choosing us. We are pleased to confirm your reservation.</p>
       </td>
     </tr>
 
     <tr>
       <td style="padding: 20px 0;">
-        <h2 style="color: #003580; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 5px;">Booking Details</h2>
+        <h2 style="color: #2c3e50; font-size: 18px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">Reservation Summary</h2>
         <p><strong>Check-In:</strong> ${
           data.bookingData.bookingDetails.date.checkInDate.split("T")[0]
         } at ${data.bookingData.bookingDetails.timeout.checkIn}</p>
@@ -43,33 +44,35 @@ const sendEmail = async (data) => {
         <p><strong>Length of Stay:</strong> ${
           data.bookingData.bookingDetails.lengthOfStay
         } night(s)</p>
-        <p><strong>Booking Status:</strong> ${data.bookingData.status}</p>
+        <p><strong>Status:</strong> ${data.bookingData.status}</p>
         <p><strong>Payment Method:</strong> ${
           data.bookingData.paymentDetails
         }</p>
-        <p><strong>Paid:</strong> ${data.bookingData.paid ? "Yes" : "No"}</p>
+        <p><strong>Payment Status:</strong> ${
+          data.bookingData.paid ? "Paid" : "Pending"
+        }</p>
       </td>
     </tr>
 
     <tr>
       <td style="padding: 20px 0;">
-        <h2 style="color: #003580; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 5px;">Room Information</h2>
-        <p><strong>Room Name:</strong> ${
+        <h2 style="color: #2c3e50; font-size: 18px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">Room Details</h2>
+        <p><strong>Room:</strong> ${
           data.bookingData.bookingDetails.roomDetails.name
         }</p>
-        <p><strong>Capacity:</strong> ${
+        <p><strong>Guests:</strong> ${
           data.bookingData.bookingDetails.roomDetails.capacity
-        } Guests</p>
+        }</p>
         <p><strong>Number of Rooms:</strong> ${
           data.bookingData.bookingDetails.roomDetails.noOfRoom
         }</p>
-        <p><strong>Base Price:</strong> ${
+        <p><strong>Base Price:</strong> $${
           data.bookingData.bookingDetails.roomDetails.basePrice
         }</p>
-        <p><strong>Final Price (incl. tax):</strong> ${
+        <p><strong>Final Price (incl. tax):</strong> $${
           data.bookingData.bookingDetails.roomDetails.finalPrice
         }</p>
-        <p><strong>Tax:</strong> ${
+        <p><strong>Tax:</strong> $${
           data.bookingData.bookingDetails.roomDetails.tax
         }</p>
       </td>
@@ -77,7 +80,7 @@ const sendEmail = async (data) => {
 
     <tr>
       <td style="padding: 20px 0;">
-        <h2 style="color: #003580; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 5px;">Cancellation Policy</h2>
+        <h2 style="color: #2c3e50; font-size: 18px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">Cancellation Policy</h2>
         <p><strong>Free cancellation until:</strong> ${
           data.bookingData.bookingDetails.roomDetails.cancellationDetails.date
         } by ${
@@ -87,8 +90,15 @@ const sendEmail = async (data) => {
     </tr>
 
     <tr>
-      <td style="text-align: center; padding-top: 30px;">
-        <p style="font-size: 14px; color: #999;">For any questions, contact our support team 24/7.</p>
+      <td style="text-align: center; padding: 30px 0;">
+        <a href="http://localhost:3000/booking-history" style="display: inline-block; padding: 12px 25px; background-color: #003580; color: #ffffff; border-radius: 5px; text-decoration: none; font-weight: bold;">View Your Booking</a>
+        <p style="margin-top: 10px; font-size: 14px; color: #888;">Manage your bookings, contact support, or make changes with just a click.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="text-align: center; padding-top: 20px;">
+        <p style="font-size: 12px; color: #aaa;">Need assistance? Our support team is here for you 24/7.</p>
       </td>
     </tr>
 

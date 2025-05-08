@@ -28,7 +28,7 @@ services:
     depends_on:
       - kafka
     ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
+      - "5000:5000"
     env_file:
       - .env
       - ./server/.env
@@ -43,13 +43,14 @@ services:
     depends_on:
       - kafka
     ports:
-      - "${PAYMENT_SERVICE_PORT}:${PAYMENT_SERVICE_PORT}"
+      - "5001:5001"
     env_file:
       - .env
       - ./payment-service/.env
     environment:
       - PORT=${PAYMENT_SERVICE_PORT}
       - KAFKA_BROKER=${KAFKA_BROKER}
+    command: ["./wait-for-it.sh", "kafka", "9092", "--", "npm", "start"]
     restart: always
 
   notification-service:
@@ -57,11 +58,12 @@ services:
     depends_on:
       - kafka
     ports:
-      - "${NOTIFICATION_SERVICE_PORT}:${NOTIFICATION_SERVICE_PORT}"
+      - "5002:5002"
     env_file:
       - .env
       - ./notification-service/.env
     environment:
       - PORT=${NOTIFICATION_SERVICE_PORT}
       - KAFKA_BROKER=${KAFKA_BROKER}
+    command: ["./wait-for-it.sh", "kafka", "9092", "--", "npm", "start"]
     restart: always
