@@ -11,7 +11,7 @@ connectDBs();
 
 const PORT = process.env.PAYMENT_SERVICE_PORT || 5001;
 
-startConsumer();
+// startConsumer();
 
 // Express Route - Start Consumer only when needed
 app.get("/pay-now", async (req, res) => {

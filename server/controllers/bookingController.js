@@ -17,21 +17,26 @@ const createBooking = async (req, res) => {
     }
 
     const { listingId, unitId, bookingDetails } = req.body;
+    const roomCount = bookingDetails?.roomDetails?.noOfRoom;
 
-    // Ensure the unit exists and is available
-    const unit = await Unit.findOne({
-      _id: unitId,
-      listingId: listingId,
-      available: true,
-    });
+    // Atomically check availability and decrement count
+    const unit = await Unit.findOneAndUpdate(
+      {
+        _id: unitId,
+        listingId: listingId,
+        available: true,
+        count: { $gte: roomCount }, // Make sure enough rooms are available
+      },
+      {
+        $inc: { count: -roomCount }, // Atomically decrement count
+      },
+      { new: true }
+    );
+
     if (!unit) {
       return res
         .status(400)
-        .json({ message: "Selected unit is not available" });
-    }
-
-    if (bookingDetails?.rommDetails?.noOfRoom > unit.count) {
-      return res.status(401).json({ message: "Insufficient Rooms" });
+        .json({ message: "Insufficient rooms or unit not available" });
     }
 
     const newBooking = new Booking({
@@ -47,7 +52,7 @@ const createBooking = async (req, res) => {
     await newBooking.save();
 
     if (process.env.DEPLOYMENT === "PROD") {
-      await kafkaProducer("unit-maintain", JSON.stringify(newBooking));
+      // await kafkaProducer("unit-maintain", JSON.stringify(newBooking));
       await kafkaProducer(
         "email-service",
         JSON.stringify({

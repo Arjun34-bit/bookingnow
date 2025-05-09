@@ -62,6 +62,14 @@ const ViewRoom = () => {
     }
   };
 
+  const [notify, setNotify] = useState(false);
+
+  const handleNotifyMe = async () => {
+    try {
+      setNotify(true);
+    } catch (error) {}
+  };
+
   const today = new Date().toISOString().split("T")[0];
 
   return (
@@ -83,7 +91,9 @@ const ViewRoom = () => {
           <p className="text-gray-700 mt-4">
             👥 Capacity: {room.capacity} Adult 0 Child
           </p>
-          <p className="text-gray-700 mt-4">1️⃣ Availability: {room?.count}</p>
+          <p className="text-gray-700 mt-4">
+            1️⃣ Availability: {room?.count > 0 ? room?.count : "Booked Solid"}
+          </p>
           <p className="text-gray-800 font-bold mt-2">
             💰 Price: ₹ {handlePrice(room?.price)} / night
           </p>
@@ -160,9 +170,9 @@ const ViewRoom = () => {
           ) : (
             <button
               className="mt-6 w-full bg-gray-400 text-white py-3 rounded-md cursor-not-allowed"
-              disabled
+              onClick={handleNotifyMe}
             >
-              Room Not Available
+              Notify Me
             </button>
           )}
 
@@ -177,6 +187,38 @@ const ViewRoom = () => {
           )}
         </div>
       </div>
+
+      {notify && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm">
+            <h2 className="text-lg font-semibold text-gray-800">
+              Notification Request 😊
+            </h2>
+            <p className="text-gray-600 mt-2">
+              🔔 Email notification on this room availability.
+            </p>
+            <div className="flex justify-end mt-4 gap-2">
+              <button
+                onClick={() => {
+                  setNotify(false);
+                }}
+                className="bg-white text-black px-4 py-2 rounded-md transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  setNotify(false);
+                  navigate("/type=hotel");
+                }}
+                className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition"
+              >
+                Explore Other
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
