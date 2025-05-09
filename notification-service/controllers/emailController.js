@@ -20,7 +20,7 @@ const sendEmail = async (data) => {
 </head>
 <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 30px;">
 
-  <table style="max-width: 600px; background: #ffffff; margin: auto; border-radius: 10px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+  <table style="max-width: 800px; background: #ffffff; margin: auto; border-radius: 10px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
     
     <tr>
       <td style="text-align: center; padding-bottom: 30px;">
@@ -60,19 +60,16 @@ const sendEmail = async (data) => {
         <p><strong>Room:</strong> ${
           data.bookingData.bookingDetails.roomDetails.name
         }</p>
-        <p><strong>Guests:</strong> ${
-          data.bookingData.bookingDetails.roomDetails.capacity
-        }</p>
         <p><strong>Number of Rooms:</strong> ${
           data.bookingData.bookingDetails.roomDetails.noOfRoom
         }</p>
-        <p><strong>Base Price:</strong> $${
+        <p><strong>Base Price:</strong> ₹${
           data.bookingData.bookingDetails.roomDetails.basePrice
         }</p>
-        <p><strong>Final Price (incl. tax):</strong> $${
+        <p><strong>Final Price (incl. tax):</strong> ₹${
           data.bookingData.bookingDetails.roomDetails.finalPrice
         }</p>
-        <p><strong>Tax:</strong> $${
+        <p><strong>Tax:</strong> ₹${
           data.bookingData.bookingDetails.roomDetails.tax
         }</p>
       </td>

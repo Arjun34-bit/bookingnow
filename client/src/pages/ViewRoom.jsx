@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getUnitById } from "../redux/unitReducer";
 import { setBookingDates, setCount } from "../redux/variableReducer";
 
@@ -8,6 +8,9 @@ const ViewRoom = () => {
   const { id } = useParams();
   const [counts, setCounts] = useState(0);
   const [cartInc, setCartInc] = useState(false);
+
+  const [notify, setNotify] = useState(false);
+  const navigate = useNavigate();
 
   const room = useSelector((state) => state?.unit?.unit);
 
@@ -62,8 +65,6 @@ const ViewRoom = () => {
     }
   };
 
-  const [notify, setNotify] = useState(false);
-
   const handleNotifyMe = async () => {
     try {
       setNotify(true);
@@ -92,10 +93,16 @@ const ViewRoom = () => {
             👥 Capacity: {room.capacity} Adult 0 Child
           </p>
           <p className="text-gray-700 mt-4">
-            1️⃣ Availability: {room?.count > 0 ? room?.count : "Booked Solid"}
+            1️⃣ Availability:{" "}
+            {room?.count > 0 ? (
+              room?.count
+            ) : (
+              <span className="text-red-500 font-semibold">Booked Solid</span>
+            )}
           </p>
           <p className="text-gray-800 font-bold mt-2">
-            💰 Price: ₹ {handlePrice(room?.price)} / night
+            💰 Price: ₹ {handlePrice(room?.price)} /{" "}
+            {room.type === "table" ? "hour" : "night"}
           </p>
 
           {/* Availability */}
@@ -169,10 +176,10 @@ const ViewRoom = () => {
             </Link>
           ) : (
             <button
-              className="mt-6 w-full bg-gray-400 text-white py-3 rounded-md cursor-not-allowed"
+              className="mt-6 w-full bg-gray-300 text-black font-bold py-3 rounded-md"
               onClick={handleNotifyMe}
             >
-              Notify Me
+              🔔 Notify Me
             </button>
           )}
 
@@ -195,7 +202,8 @@ const ViewRoom = () => {
               Notification Request 😊
             </h2>
             <p className="text-gray-600 mt-2">
-              🔔 Email notification on this room availability.
+              Email notification set on this{" "}
+              {room.type === "table" ? "table" : "room"} availability.
             </p>
             <div className="flex justify-end mt-4 gap-2">
               <button
@@ -209,11 +217,15 @@ const ViewRoom = () => {
               <button
                 onClick={() => {
                   setNotify(false);
-                  navigate("/type=hotel");
+                  navigate(
+                    `/listing?type=${
+                      room.type === "table" ? "restaurants" : "hotel"
+                    }`
+                  );
                 }}
                 className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition"
               >
-                Explore Other
+                Explore Other {room.type === "table" ? "Restaurants" : "Hotel"}
               </button>
             </div>
           </div>
