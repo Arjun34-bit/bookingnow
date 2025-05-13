@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const Notify = require("../model/Notify");
 const { emailDBService } = require("../services/email");
 
 const sendEmail = async (data) => {
@@ -125,6 +126,24 @@ const sendEmail = async (data) => {
   }
 };
 
-const sendEmailController = async (req, res) => {};
+const notifyUserController = async (req, res) => {
+  try {
+    const { listingId, unitId, email } = req.body;
 
-module.exports = { sendEmail, sendEmailController };
+    const isUserInNotify = await Notify.findOne({ unitId, email });
+
+    if (isUserInNotify) {
+      return res
+        .status(400)
+        .json({ message: "Remainder Notification Already Set for this room" });
+    }
+
+    await Notify.create({ listingId, unitId, email });
+
+    return res.status(200).json({ message: "Remainder Notification Set" });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { sendEmail, notifyUserController };

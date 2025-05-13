@@ -1,0 +1,23 @@
+http:
+  port: 8080 # Gateway server will run on this port
+
+apiEndpoints:
+  public-api:
+    path: /notification-service/*
+    methods: [GET, POST, PUT, DELETE]
+
+serviceEndpoints:
+  backend-service:
+    url: http://localhost:5002 # Backend server
+
+policies:
+  - proxy
+
+pipelines:
+  default:
+    apiEndpoints:
+      - public-api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: backend-service
