@@ -137,34 +137,25 @@ const getAllBookings = async (req, res) => {
 const cancelBooking = async (req, res) => {
   try {
     const { bookingId } = req.params;
+    const result = await cancelBookingService(bookingId, req.user.userId);
 
-    const booking = await Booking.findById({
-      _id: bookingId,
-      customer: req.user.userId,
-    });
-
-    if (!booking) {
-      return res
-        .status(404)
-        .json({ message: "Booking not found or unauthorized" });
+    //kafka topic for sending notification emails to users
+    if (process.env.DEPLOYMENT === "PROD") {
+      await kafkaProducer(
+        "booking-cancelled",
+        JSON.stringyfy({
+          listingName: result?.bookingDetails?.roomDetails?.name,
+          unitId: result?.unitId,
+          availableRooms: result?.bookingDetails?.roomDetails?.noOfRoom,
+        })
+      );
     }
 
-    const unit = await Unit.updateOne(
-      { listingId: booking.listingId },
-      { available: true }
-    );
-
-    const updatedBooking = await Booking.findByIdAndUpdate(
-      bookingId,
-      { status: "canceled" },
-      { new: true }
-    );
-
-    res.status(200).json({ message: "Booking canceled successfully", booking });
+    res.status(200).json({ message: "Booking cancelled successfully", result });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Error canceling booking", error: error.message });
+      .json({ message: "Error cancell9ing booking", error: error.message });
   }
 };
 

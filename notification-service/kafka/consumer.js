@@ -1,5 +1,8 @@
 const { client } = require("./kafka");
-const { sendEmail } = require("../controllers/emailController");
+const {
+  sendEmail,
+  notifyUserController,
+} = require("../controllers/emailController");
 
 let consumerInstance;
 
@@ -16,10 +19,25 @@ const startConsumer = async () => {
         fromBeginning: false,
       });
 
+      await consumerInstance.subscribe({
+        topic: "booking-cancelled",
+        fromBeginning: false,
+      });
+
       await consumerInstance.run({
         eachMessage: async ({ topic, partition, message }) => {
           const data = JSON.parse(message.value.toString());
-          await sendEmail(data);
+
+          switch (topic) {
+            case "eamil-service":
+              await sendEmail(data);
+              break;
+            case "booking-cancelled":
+              await notifyUserController(data);
+              break;
+            default:
+              console.warn(`Unhandled topic : ${topic}`);
+          }
         },
       });
 

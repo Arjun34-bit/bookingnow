@@ -1,17 +1,9 @@
-const nodemailer = require("nodemailer");
 const Notify = require("../model/Notify");
-const { emailDBService } = require("../services/email");
+const { emailDBService } = require("../services/emailDB");
+const { mail } = require("../services/mailService");
 
 const sendEmail = async (data) => {
   try {
-    const transporter = nodemailer.createTransport({
-      service: "Gmail",
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASS,
-      },
-    });
-
     let subjectContent = `Hello ${data?.name.toUpperCase()} Your Booking is Confirmed`;
     let htmlContent = `<!DOCTYPE html>
 <html lang="en">
@@ -105,28 +97,27 @@ const sendEmail = async (data) => {
 </body>
 </html>`;
 
-    const mailOptions = {
-      from: "",
-      to: data?.email,
+    const isMailSent = await mail({
+      email: data?.email,
       subject: subjectContent,
-      html: htmlContent,
-    };
+      main: htmlContent,
+    });
 
-    await transporter.sendMail(mailOptions);
-
-    await emailDBService(
-      data?.email,
-      subjectContent,
-      "Email Sent Successfully",
-      "sent",
-      0
-    );
+    if (isMailSent) {
+      await emailDBService(
+        data?.email,
+        subjectContent,
+        "Email Sent Successfully",
+        "sent",
+        0
+      );
+    }
   } catch (e) {
     await emailDBService(data?.email, subjectContent, htmlContent, "failed", 1);
   }
 };
 
-const notifyUserController = async (req, res) => {
+const notifyDBController = async (req, res) => {
   try {
     const { listingId, unitId, email } = req.body;
 
@@ -146,4 +137,8 @@ const notifyUserController = async (req, res) => {
   }
 };
 
-module.exports = { sendEmail, notifyUserController };
+const notifyUsers = async (data) => {
+  const { listingName, unitId, noOfRoom } = data;
+};
+
+module.exports = { sendEmail, notifyDBController, notifyUsers };
