@@ -29,7 +29,7 @@ const startConsumer = async () => {
           const data = JSON.parse(message.value.toString());
 
           switch (topic) {
-            case "eamil-service":
+            case "email-service":
               await sendEmail(data);
               break;
             case "booking-cancelled":

@@ -137,8 +137,13 @@ const notifyDBController = async (req, res) => {
   }
 };
 
-const notifyUsers = async (data) => {
+const notifyUserController = async (data) => {
   const { listingName, unitId, noOfRoom } = data;
+
+  const userEmails = await Notify.find(
+    { unitId },
+    { email: 1, _id: 0 }
+  ).toArray();
 };
 
-module.exports = { sendEmail, notifyDBController, notifyUsers };
+module.exports = { sendEmail, notifyDBController, notifyUserController };
