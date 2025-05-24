@@ -144,6 +144,8 @@ const notifyUserController = async (data) => {
     { unitId },
     { email: 1, _id: 0 }
   ).toArray();
+
+  // await sendToEmailWorker(userEmails)
 };
 
 module.exports = { sendEmail, notifyDBController, notifyUserController };
