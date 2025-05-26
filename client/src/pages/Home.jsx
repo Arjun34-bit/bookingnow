@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../redux/authReducer";
 import RoomSearch from "../miscellenous/RoomSearch";
+import TrendingContainer from "../components/TrendingCard";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -54,6 +55,10 @@ const Home = () => {
             Hostels
           </Link>
         </div>
+      </div>
+
+      <div className="mt-2 mb-2">
+        <TrendingContainer />
       </div>
 
       {/* Features Section */}
