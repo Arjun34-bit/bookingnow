@@ -6,7 +6,7 @@ const ListingCard = ({ listing }) => {
     <div className="max-w-sm w-full bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
       {/* Image Section */}
       <img
-        className="w-full h-48 object-cover"
+        className="w-full h-48 object-cover transition-transform duration-300 transform hover:scale-105"
         src={listing.images}
         alt={listing.name}
       />
