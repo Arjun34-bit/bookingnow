@@ -7,6 +7,7 @@ const bookingRoutes = require("./routes/bookingRoutes");
 const listingRoutes = require("./routes/listingRoutes");
 const unitRoutes = require("./routes/unitRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
+const homeRoutes = require("./routes/homeRoutes");
 
 const { createTopics } = require("./kafka-service/admin");
 
@@ -51,6 +52,7 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/units", unitRoutes);
 app.use("/api/listing", listingRoutes);
+app.use("/api/home", homeRoutes);
 
 // Start Server
 const PORT = process.env.SERVER_PORT || 5000;

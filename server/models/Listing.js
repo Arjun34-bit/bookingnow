@@ -10,6 +10,7 @@ const ListingSchema = new mongoose.Schema(
     },
     name: String,
     address: String,
+    city: String,
     contact: Number,
     description: String,
     facilities: [String],

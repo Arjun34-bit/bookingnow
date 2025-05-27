@@ -65,15 +65,15 @@ const Home = () => {
       <section className="container mx-auto px-4 py-12 text-center">
         <h2 className="text-3xl font-bold mb-6">Why Choose Us?</h2>
         <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 shadow-md rounded-lg">
+          <div className="bg-white p-6 shadow-md rounded-lg transition-transform duration-300 transform hover:scale-105">
             <h3 className="text-xl font-semibold mb-2">Best Deals</h3>
             <p>We provide the best hotel & restaurant deals with discounts.</p>
           </div>
-          <div className="bg-white p-6 shadow-md rounded-lg">
+          <div className="bg-white p-6 shadow-md rounded-lg transition-transform duration-300 transform hover:scale-105">
             <h3 className="text-xl font-semibold mb-2">Verified Listings</h3>
             <p>All hotels and restaurants are verified for quality service.</p>
           </div>
-          <div className="bg-white p-6 shadow-md rounded-lg">
+          <div className="bg-white p-6 shadow-md rounded-lg transition-transform duration-300 transform hover:scale-105">
             <h3 className="text-xl font-semibold mb-2">Easy Booking</h3>
             <p>
               Book your favorite places with a simple and user-friendly process.

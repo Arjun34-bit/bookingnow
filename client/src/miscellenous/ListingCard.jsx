@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ListingCard = ({ listing }) => {
-  console.log(listing);
   return (
     <div className="max-w-sm w-full bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
       {/* Image Section */}
@@ -45,7 +44,7 @@ const ListingCard = ({ listing }) => {
 
         {/* Deals */}
         {listing?.offers && (
-          <div className="h-5 bg-green-600 text-white p-0.5 rounded-lg text-[8px] text-center font-bold mt-1">
+          <div className="h-5 bg-green-600 text-white py-0.5 rounded-lg text-[8px] text-center font-bold mt-1 w-32">
             {listing?.offers}
           </div>
         )}
@@ -55,7 +54,7 @@ const ListingCard = ({ listing }) => {
           {listing.facilities.map((facility, index) => (
             <span
               key={index}
-              className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
+              className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded mt-2"
             >
               {facility}
             </span>

@@ -8,6 +8,9 @@ import Cookies from "js-cookie";
 const Navbar = () => {
   const user = useSelector((state) => state?.user);
   const dispatch = useDispatch();
+
+  const [selectedLocation, setSelectedLocation] = useState("");
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleModal = (e) => {
@@ -18,6 +21,13 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const handleLocation = (e) => {
+    e.preventDefault();
+    setSelectedLocation(e.target.value);
+  };
+
+  localStorage.setItem("cityLocation", selectedLocation);
 
   return (
     <nav className="bg-blue-600 text-white p-4 shadow-md">
@@ -39,9 +49,26 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/vendor" className="p-1 hover:text-gray-300">
+            <Link
+              to="/vendor"
+              className="p-1 hover:text-gray-300"
+              target="_blank"
+            >
               List Your Property
             </Link>
+          </li>
+          <li>
+            <select
+              name="city"
+              id="city"
+              className="text-black w-32 p-1 rounded-lg"
+              onChange={handleLocation}
+            >
+              <option value="delhi">Delhi</option>
+              <option value="mumbai">Mumbai</option>
+              <option value="bangalore">Bangalore</option>
+              <option value="chennai">Chennai</option>
+            </select>
           </li>
           {user?.user?.role ? (
             <DropDown />
